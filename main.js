@@ -1,213 +1,255 @@
-/* global keyMonkey, createjs */
+/* global createjs draw */
+// Constants
+
+
 
 // Initialization function
 function init() {
-  var gridArray = [];
+  let turn = 'friendly';
+  let selected = null;
+  let target = null;
 
-  for (var row = 0; row < 25; row++) {
-    gridArray[row] = [];
-    for (var col = 0; col < 25; col++) {
-      gridArray[row][col] = 0;
-    }
-  }
-  gridArray[5][10] = 1;
+   gridArray[5][10] = 3;
+  gridArray[5][11] = 3;
+  gridArray[5][12] = 3;
 
-  console.log(gridArray);
 
-  const gridSize = 64;
-
-  var canvas = document.getElementById('myCanvas');
-  var stage = new createjs.Stage(canvas);
-
-  // Constants for sprite and grid dimensions
-  const SPRITE_WIDTH = 64;
-  const SPRITE_HEIGHT = 64;
-  const BORDER_WIDTH = 0;
-  const SPACING_WIDTH = 0;
-  const GRID_WIDTH = 64;
-  const GRID_HEIGHT = 64;
-
-  // Adjusted URL for sprite sheet
-  var spriteSheetURL = 'images/box_128.png';
-  var image = new Image();
-  image.src = spriteSheetURL;
-  image.crossOrigin = true;
-
-  var moveX = 0;
-  var moveY = 0;
-
-  var ySelect = 0;
-  var xSelect = 0;
-  var gridColors = ["grey", "black", "red"];
-  var activeColor = 0;
+  friendlyUnits = [new Unit(10, 5), new Unit(0, 0)];
+ enemyUnits = [new Unit(10, 10)];
 
   
-  // Create sprite sheet
-  var spriteSheet = new createjs.SpriteSheet({
-    images: [image],
-    frames: {
-      width: SPRITE_WIDTH,
-      height: SPRITE_HEIGHT,
-    },
-    animations: {
-      run: [0, 3]
-    }
-  });
 
-  var currentFrameIndex = 0;
-  var sprite = new createjs.Sprite(spriteSheet, 'run');
-
-  class Player {
-    constructor(sprite, row, col) {
-      this.sprite = new createjs.Sprite(spriteSheet, 'run');
-      this.row = row;
-      this.col = col;
-      this.srow = this.row;
-      this.scol = this.col;
-      this.selected = false;
-      this.max_move = 4;
-      this.movement = 4;
-    }
-  }
-
-  var playerObj = new Player(sprite, 0, 0);
-  playerObj.sprite.gotoAndStop(currentFrameIndex);
   
 
-  var playerObj2 = new Player(spriteSheet, 5, 5);
-  playerObj2.sprite.gotoAndStop(currentFrameIndex);
- 
-  
-  
-  
-  // Create a square shape
+
+
+  // Create a square shape for the grid
   function drawGrid() {
-    for (var j = 0; j < gridArray.length; j++) {
-      xSelect = 0;
+    const GRID_COLORS = ["grey", "black", "red"];
+    let activeColor = 0;
+    let ySelect = 0;
 
-      for (var i = 0; i < gridArray[j].length; i++) {
-        var square = new createjs.Shape();
+    gridArray.forEach((row, j) => {
+      let xSelect = 0;
 
-        // Check for starting position
-        if ((playerObj.srow == j && playerObj.scol == i) || (playerObj2.srow == j && playerObj2.scol == i)) {
-          square.graphics.beginFill("blue").drawRect(0, 0, gridSize, gridSize);
-        } else if (gridArray[j][i] == 0) {
-          square.graphics.beginFill(gridColors[activeColor]).drawRect(0, 0, gridSize, gridSize);
-        } else {
-          square.graphics.beginFill(gridColors[2]).drawRect(0, 0, gridSize, gridSize);
-          console.log(j + "," + i + " not empty");
+      row.forEach((cell, i) => {
+        const square = new createjs.Shape();
+        const isUnitHere = [...friendlyUnits, ...enemyUnits].some(unit => unit.srow === j && unit.scol === i);
+        const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement); //&& !isObstacleBetween(selected.scol, selected.srow, i, j);
+
+
+
+        if (isUnitHere) {
+          square.graphics.beginFill("blue").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
         }
+        else if (isValidMove) {
+          square.graphics.beginFill("lightblue").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
+        }
+        else {
+          square.graphics.beginFill(GRID_COLORS[cell === 0 ? activeColor : 2]).drawRect(0, 0, GRID_SIZE, GRID_SIZE);
+        }
+
+
+        // Add lines to the grid
+        square.graphics.setStrokeStyle(.5).beginStroke("black");
+        square.graphics.moveTo(0, 0).lineTo(GRID_SIZE, 0);
+        square.graphics.moveTo(GRID_SIZE, 0).lineTo(GRID_SIZE, GRID_SIZE);
+        square.graphics.moveTo(GRID_SIZE, GRID_SIZE).lineTo(0, GRID_SIZE);
+        square.graphics.moveTo(0, GRID_SIZE).lineTo(0, 0);
+
 
         square.x = xSelect;
         square.y = ySelect;
 
-        xSelect += gridSize;
-        activeColor = (activeColor + 1) % gridColors.length;
-        if (activeColor == 2) {
+        xSelect += GRID_SIZE;
+        activeColor = (activeColor + 1) % GRID_COLORS.length;
+        if (activeColor > 1) {
           activeColor = 0;
         }
         // Add square to the stage
         stage.addChild(square);
-      }
-      ySelect += gridSize;
-    }
+      });
+
+      ySelect += GRID_SIZE;
+    });
   }
 
   // Initial grid drawing
   drawGrid();
-  stage.addChild(playerObj.sprite);
- stage.addChild(playerObj2.sprite);
 
-  function getGridPosition(x, y) {
-    var col = Math.floor(x / gridSize);
-    var row = Math.floor(y / gridSize);
-    return [col, row];
-  }
-
-  // Move sprite to the clicked grid spot
-  function moveToPoint(x, y, obj) {
-    // Calculate the grid position based on the mouse coordinates
-    var newPos = getGridPosition(x, y);
-    var newCol = newPos[0];
-    var newRow = newPos[1];
-
-    // Check if the new position is adjacent to the current position
-    console.log("distance: " + (Math.sqrt(Math.pow(newCol - obj.scol, 2) + Math.pow(newRow - obj.srow, 2))) + "/" + obj.movement);
-    if (Math.sqrt(Math.pow(newCol - obj.scol, 2) + Math.pow(newRow - obj.srow, 2)) <= obj.movement) {
-     
-
-      // Update the player's position
-      obj.col = newCol;
-      obj.row = newRow;
-
-      // Change sprite frame index
-      currentFrameIndex = (currentFrameIndex + 1) % spriteSheet.getNumFrames();
-      obj.sprite.gotoAndStop(currentFrameIndex);
-    }
-  }
-
-  // Add click event listener to the canvas
-  canvas.addEventListener("click", function (event) {
-    var rect = canvas.getBoundingClientRect();
-    var mouseX = event.clientX - rect.left;
-    var mouseY = event.clientY - rect.top;
-
-    var gridPosition = getGridPosition(mouseX, mouseY);
-    console.log('Grid position: ' + gridPosition);
-    console.log('Player position: ' + playerObj.col, playerObj.row);
-    console.log('Player 2 position: ' + playerObj2.col, playerObj2.row);
-
-    if (playerObj.selected == true) {
-      moveToPoint(mouseX, mouseY, playerObj);
-    }
-    if (playerObj2.selected == true) {
-      moveToPoint(mouseX, mouseY, playerObj2);
-    }
-
-    document.addEventListener("mouseup", function (event) {
-      if (playerObj.col == gridPosition[0] && playerObj.row == gridPosition[1]) {
-        playerObj.selected = true;
-      } else {
-        playerObj.selected = false;
-      }
-
-      if (playerObj2.col == gridPosition[0] && playerObj2.row == gridPosition[1]) {
-        playerObj2.selected = true;
-      } else {
-        playerObj2.selected = false;
-      }
-
-    });
+  // Add units to the stage and update gridArray
+  friendlyUnits.forEach(unit => {
+    stage.addChild(unit.sprite);
+    gridArray[unit.srow][unit.scol] = 1;
+    unit.sprite.gotoAndStop(currentFrameIndex);
   });
 
-  function end_turn() {
-    // Update the player's actual position to the intended position at the end of the turn
-    playerObj.scol = playerObj.col;
-    playerObj.srow = playerObj.row;
-    playerObj2.scol = playerObj2.col;
-    playerObj2.srow = playerObj2.row;
+  enemyUnits.forEach(unit => {
+    stage.addChild(unit.sprite);
+    gridArray[unit.srow][unit.scol] = 2;
+    unit.sprite.gotoAndStop(currentFrameIndex);
+  });
 
-    // Reset movements for the next turn
-    playerObj.movement = playerObj.max_move;
-    playerObj2.movement = playerObj2.max_move;
+  // Get the grid position based on mouse coordinates
+  function getGridPosition(x, y) {
+    return [Math.floor(x / GRID_SIZE), Math.floor(y / GRID_SIZE)];
+  }
+
+  // Move the sprite to the clicked grid spot
+  function moveToPoint(x, y, unit) {
+    const [newCol, newRow] = getGridPosition(x, y);
+    const distance = Math.sqrt(Math.pow(newCol - unit.scol, 2) + Math.pow(newRow - unit.srow, 2));
+    const isValidMove = gridArray[newRow][newCol] === 0 && findPath(selected.scol, selected.srow, newCol, newRow, unit.movement); //!isObstacleBetween(unit.scol, unit.srow, newCol, newRow);
+
+
+    if (isValidMove) {
+      unit.col = newCol;
+      unit.row = newRow;
+      currentFrameIndex = (currentFrameIndex + 1) % spriteSheet.getNumFrames();
+      unit.sprite.gotoAndStop(currentFrameIndex);
+    }
+  }
+
+  // Add event listener for the Enter key to end the turn
+  document.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      endTurn();
+      console.log(`${turn}'s turn`);
+    }
+    else if (selected && event.key === "w") {
+      moveToPoint(selected.col * GRID_SIZE, (selected.row - 1) * GRID_SIZE, selected);
+    }
+    else if (selected && event.key === "a") {
+      moveToPoint((selected.col - 1) * GRID_SIZE, selected.row * GRID_SIZE, selected);
+    }
+    else if (selected && event.key === "s") {
+      moveToPoint(selected.col * GRID_SIZE, (selected.row + 1) * GRID_SIZE, selected);
+    }
+    else if (selected && event.key === "d") {
+      moveToPoint((selected.col + 1) * GRID_SIZE, selected.row * GRID_SIZE, selected);
+    }
+  });
+
+  // Add click event listener to the canvas
+  document.addEventListener("mouseup", () => {
+
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    const gridPosition = getGridPosition(mouseX, mouseY);
+    var distance = 0
+    if (selected != null) {
+      distance = Math.sqrt(Math.pow(gridPosition[0] - selected.col, 2) + Math.pow(gridPosition[1] - selected.row, 2));
+    }
+
+    console.log(`Grid position: ${gridPosition} ${gridArray[gridPosition[1]][gridPosition[0]]}`);
+
+    if (selected && gridArray[gridPosition[1]][gridPosition[0]] === 0) {
+      moveToPoint(mouseX, mouseY, selected);
+    }
+
+
+    const units = turn === 'friendly' ? friendlyUnits : enemyUnits;
+    const targets = turn === 'friendly' ? enemyUnits : friendlyUnits;
+
+    target = targets.find(unit => unit.col === gridPosition[0] && unit.row === gridPosition[1]);
+    if (target != undefined) {
+      console.log("target is ", target);
+    }
+    else {
+      selected = units.find(unit => unit.col === gridPosition[0] && unit.row === gridPosition[1]);
+    }
+
+    if (selected != undefined) {
+      console.log("selected is ", selected);
+      if (target != undefined && distance <= selected.range[1] && distance >= selected.range[0] && selected.actions >= 0) {
+        console.log("attacking", target);
+        selected.actions--;
+        target.health -= selected.attack;
+        selected.movement -= Math.floor(Math.sqrt(Math.pow(selected.scol - selected.col, 2) + Math.pow(selected.srow - selected.row, 2)));
+        gridArray[selected.srow][selected.scol] = 0;
+        selected.scol = selected.col;
+        selected.srow = selected.row;
+        if (turn === 'friendly') {
+          gridArray[selected.row][selected.col] = 1;
+        }
+        else {
+          gridArray[selected.row][selected.col] = 2;
+        }
+        console.log("target health", target.health);
+        console.log("selected actions at", selected.actions);
+
+
+        if (target.health <= 0) {
+          target.sprite.visible = false;
+          stage.removeChild(target.sprite);
+          if (turn === 'friendly') {
+            enemyUnits.splice(enemyUnits.indexOf(target), 1);
+          }
+          else {
+            friendlyUnits.splice(friendlyUnits.indexOf(target), 1);
+          }
+          gridArray[target.row][target.col] = 0;
+          console.log("target dead");
+        }
+      }
+    }
+  });
+
+
+  // Function to end the turn
+  function endTurn() {
+    selected = undefined
+    // Update the player's actual position to the intended position at the end of the turn
+    friendlyUnits.forEach(unit => {
+      gridArray[unit.srow][unit.scol] = 0;
+      unit.scol = unit.col;
+      unit.srow = unit.row;
+      gridArray[unit.srow][unit.scol] = 1;
+      unit.actions = unit.maxActions;
+      unit.movement = unit.maxMovement;
+      unit.bonusActions = unit.maxBonusActions;
+    });
+
+    enemyUnits.forEach(unit => {
+      gridArray[unit.srow][unit.scol] = 0;
+      unit.scol = unit.col;
+      unit.srow = unit.row;
+      gridArray[unit.srow][unit.scol] = 2;
+      unit.actions = unit.maxActions;
+      unit.movement = unit.maxMovement;
+      unit.bonusActions = unit.maxBonusActions;
+    });
+
+
+
+    // Switch turns between friendly and enemy
+    turn = turn === 'friendly' ? 'enemy' : 'friendly';
+    console.log(gridArray);
+  }
+
+  // Update the stage on each tick
+  createjs.Ticker.on("tick", () => {
+    stage.update();
+
+    friendlyUnits.forEach(unit => {
+      unit.sprite.x = unit.col * GRID_SIZE;
+      unit.sprite.y = unit.row * GRID_SIZE;
+    });
+
+    enemyUnits.forEach(unit => {
+      unit.sprite.x = unit.col * GRID_SIZE;
+      unit.sprite.y = unit.row * GRID_SIZE;
+    });
 
     // Clear the stage and redraw the grid to show updated starting positions
     stage.removeAllChildren();
     drawGrid();
 
     // Re-add players to the stage
-    stage.addChild(playerObj.sprite);
-    stage.addChild(playerObj2.sprite);
-  }
+    friendlyUnits.forEach(unit => stage.addChild(unit.sprite));
+    enemyUnits.forEach(unit => stage.addChild(unit.sprite));
 
-  // Update the stage on each tick
-  createjs.Ticker.on("tick", function () {
-    stage.update();
-    playerObj.sprite.x = (playerObj.col * gridSize);
-    playerObj.sprite.y = (playerObj.row * gridSize);
-
-    playerObj2.sprite.x = (playerObj2.col * gridSize);
-    playerObj2.sprite.y = (playerObj2.row * gridSize);
   });
 }
 

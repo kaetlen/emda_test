@@ -1,140 +1,228 @@
-/* global keyMonkey, createjs */
+/* global createjs */
 
-// Initialization function
-function init() {
-  // Initialize grid and canvas
-  const gridSize = 64;
-  const GRID_WIDTH = 25;
-  const GRID_HEIGHT = 25;
-  const SPRITE_WIDTH = 64;
-  const SPRITE_HEIGHT = 64;
-  const BORDER_WIDTH = 0;
-  const spriteSheetURL = 'images/box_128.png';
-  const gridArray = [];
+const GRID_SIZE = 64;
+const SPRITE_WIDTH = 64;
+const SPRITE_HEIGHT = 64;
 
-  for (let row = 0; row < GRID_HEIGHT; row++) {
-    gridArray[row] = [];
-    for (let col = 0; col < GRID_WIDTH; col++) {
-      gridArray[row][col] = 0; // Initialize grid cells to empty
-    }
-  }
-  gridArray[5][10] = 1; // Example: Set a grid cell as occupied
-
-  console.log(gridArray);
+ // Create a 2D array for the grid
+  const gridArray = Array(25).fill().map(() => Array(25).fill(0));
 
   const canvas = document.getElementById('myCanvas');
   const stage = new createjs.Stage(canvas);
 
-  const playerUnits = [];
-  const enemyUnits = [];
-
+  // Adjusted URL for sprite sheet
+  const spriteSheetURL = 'images/box_128.png';
   const image = new Image();
   image.src = spriteSheetURL;
   image.crossOrigin = true;
 
-  let moveX = 0;
-  let moveY = 0;
-  let selectedUnit = null;
-  let currentPlayerTurn = "Player";
-
   // Create sprite sheet
   const spriteSheet = new createjs.SpriteSheet({
     images: [image],
-    frames: {
-      width: SPRITE_WIDTH,
-      height: SPRITE_HEIGHT,
-      regX: BORDER_WIDTH,
-      regY: BORDER_WIDTH,
-    },
+    frames: { width: SPRITE_WIDTH, height: SPRITE_HEIGHT },
+    animations: { run: [0, 3] }
   });
 
-  // Create grid
-  for (let row = 0; row < GRID_HEIGHT; row++) {
-    for (let col = 0; col < GRID_WIDTH; col++) {
-      const tile = new createjs.Sprite(spriteSheet);
-      tile.gotoAndStop(0); // Select frame from sprite sheet
-      tile.x = col * SPRITE_WIDTH;
-      tile.y = row * SPRITE_HEIGHT;
-      tile.width = SPRITE_WIDTH;
-      tile.height = SPRITE_HEIGHT;
-      tile.addEventListener('mouseover', function(event) {
-        tile.gotoAndStop(1); // Change frame when mouse is over
-      });
-      tile.addEventListener('mouseout', function(event) {
-        tile.gotoAndStop(0); // Revert back to original frame when mouse leaves
-      });
-      tile.addEventListener('click', function(event) {
-        console.log('Clicked on tile:', event.target);
-      });
-      stage.addChild(tile);
+  let currentFrameIndex = 0;
+
+
+  // Define the unit class
+  class Unit {
+    constructor(row, col, health = 100, movement = 5, attack = 10, defense = 0, range = [1, 1], maxActions = 1, maxBonusActions = 1) {
+      this.sprite = new createjs.Sprite(spriteSheet, 'run');
+      this.row = row;
+      this.col = col;
+      this.srow = this.row;
+      this.scol = this.col;
+      this.maxMovement = movement;
+      this.movement = movement;
+      this.health = health;
+      this.attack = attack;
+      this.defense = defense;
+      this.range = range;
+      this.maxActions = maxActions;
+      this.actions = 0;
+      this.maxBonusActions = maxBonusActions;
+      this.bonusActions = 0;
     }
   }
 
-  // Create units
-  const playerUnit1 = createUnit(2, 2, "Player", 2); // Example: maxDistance of 2
-  const playerUnit2 = createUnit(4, 4, "Player", 3); // Example: maxDistance of 3
-  const enemyUnit1 = createUnit(8, 2, "Enemy", 2); // Example: maxDistance of 2
-  const enemyUnit2 = createUnit(6, 4, "Enemy", 3); // Example: maxDistance of 3
+ var friendlyUnits = []
+var enemyUnits = []
 
-  stage.update();
-
-  // Keyboard controls
-  keyMonkey.attach({
-    'up': () => moveUnit(selectedUnit, 0, -1),
-    'down': () => moveUnit(selectedUnit, 0, 1),
-    'left': () => moveUnit(selectedUnit, -1, 0),
-    'right': () => moveUnit(selectedUnit, 1, 0),
-    'space': endTurn,
-  });
-
-  // Update function
-  createjs.Ticker.addEventListener('tick', () => stage.update());
-
-  function createUnit(x, y, type, maxDistance) {
-    const unit = new createjs.Sprite(spriteSheet);
-    unit.gotoAndStop(type === "Player" ? 1 : 2); // Adjust frame index for player and enemy units
-    unit.x = x * SPRITE_WIDTH;
-    unit.y = y * SPRITE_HEIGHT;
-    unit.width = SPRITE_WIDTH;
-    unit.height = SPRITE_HEIGHT;
-    unit.type = type;
-    unit.maxDistance = maxDistance; // Set max distance for the unit
-
-    unit.addEventListener("click", function(event) {
-      console.log("Selected unit: ", this);
-      selectedUnit = this;
-    });
-
-    if (type === "Player") {
-      playerUnits.push(unit);
-    } else {
-      enemyUnits.push(unit);
+class PriorityQueue {
+    constructor(comparator = (a, b) => a > b) {
+      this._heap = [];
+      this._comparator = comparator;
     }
 
-    stage.addChild(unit);
-    return unit;
-  }
+    size() {
+      return this._heap.length;
+    }
 
-  function moveUnit(unit, offsetX, offsetY) {
-    if (!unit || currentPlayerTurn !== unit.type) return; // Check if it's the unit's turn
-    const newX = unit.x / SPRITE_WIDTH + offsetX;
-    const newY = unit.y / SPRITE_HEIGHT + offsetY;
+    isEmpty() {
+      return this.size() == 0;
+    }
 
-    // Check if the movement is within the unit's max distance and if the cell is empty
-    if (newX >= 0 && newX < GRID_WIDTH && newY >= 0 && newY < GRID_HEIGHT &&
-        gridArray[newY][newX] === 0 &&
-        Math.abs(newX - (unit.x / SPRITE_WIDTH)) + Math.abs(newY - (unit.y / SPRITE_HEIGHT)) <= unit.maxDistance) {
-      unit.x += offsetX * SPRITE_WIDTH;
-      unit.y += offsetY * SPRITE_HEIGHT;
+    peek() {
+      return this._heap[0];
+    }
+
+    push(value) {
+      this._heap.push(value);
+      this._siftUp();
+    }
+
+    pop() {
+      const poppedValue = this.peek();
+      const bottom = this.size() - 1;
+      if (bottom > 0) {
+        this._swap(0, bottom);
+      }
+      this._heap.pop();
+      this._siftDown();
+      return poppedValue;
+    }
+
+    _parent(i) {
+      return ((i + 1) >>> 1) - 1;
+    }
+
+    _left(i) {
+      return (i << 1) + 1;
+    }
+
+    _right(i) {
+      return (i + 1) << 1;
+    }
+
+    _greater(i, j) {
+      return this._comparator(this._heap[i], this._heap[j]);
+    }
+
+    _swap(i, j) {
+      [this._heap[i], this._heap[j]] = [this._heap[j], this._heap[i]];
+    }
+
+    _siftUp() {
+      let node = this.size() - 1;
+      while (node > 0 && this._greater(node, this._parent(node))) {
+        this._swap(node, this._parent(node));
+        node = this._parent(node);
+      }
+    }
+
+    _siftDown() {
+      let node = 0;
+      while (
+        (this._left(node) < this.size() && this._greater(this._left(node), node)) ||
+        (this._right(node) < this.size() && this._greater(this._right(node), node))
+      ) {
+        let maxChild = (this._right(node) < this.size() && this._greater(this._right(node), this._left(node))) ? this._right(node) : this._left(node);
+        this._swap(node, maxChild);
+        node = maxChild;
+      }
     }
   }
 
-  function endTurn() {
-    // Switch turns between players and enemies
-    currentPlayerTurn = currentPlayerTurn === "Player" ? "Enemy" : "Player";
-    console.log(currentPlayerTurn + "'s turn.");
-  }
-}
 
-// Initialize the game
-init();
+
+function findPath(startCol, startRow, endCol, endRow, maxDistance) {
+    const openList = new PriorityQueue((a, b) => a.f < b.f);
+    const closedList = new Set();
+    const cameFrom = Array(gridArray.length).fill().map(() => Array(gridArray[0].length).fill(null));
+
+    openList.push({ col: startCol, row: startRow, g: 0, h: 0, f: 0 });
+
+    while (!openList.isEmpty()) {
+      let currentNode = openList.pop();
+
+      if (currentNode.col === endCol && currentNode.row === endRow) {
+        const path = [];
+        let current = currentNode;
+        while (current) {
+          path.unshift({ col: current.col, row: current.row });
+          current = cameFrom[current.row][current.col];
+        }
+        return path;
+      }
+
+      closedList.add(`${currentNode.col},${currentNode.row}`);
+
+      const neighbors = getNeighbors(currentNode, startCol, startRow, maxDistance);
+
+      for (const neighbor of neighbors) {
+        const g = currentNode.g + 1;
+        const h = Math.abs(neighbor.col - endCol) + Math.abs(neighbor.row - endRow);
+        const f = g + h;
+
+        if (closedList.has(`${neighbor.col},${neighbor.row}`)) {
+          continue;
+        }
+
+        const existingNode = openList._heap.find(node => node.col === neighbor.col && node.row === neighbor.row);
+        if (existingNode) {
+          if (g < existingNode.g) {
+            existingNode.g = g;
+            existingNode.f = f;
+            cameFrom[neighbor.row][neighbor.col] = currentNode;
+          }
+        } else {
+          openList.push({ col: neighbor.col, row: neighbor.row, g, h, f });
+          cameFrom[neighbor.row][neighbor.col] = currentNode;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  function getNeighbors(node, startCol, startRow, maxDistance) {
+    const neighbors = [];
+    for (let col = node.col - 1; col <= node.col + 1; col++) {
+      for (let row = node.row - 1; row <= node.row + 1; row++) {
+        if (col === node.col && row === node.row) {
+          continue;
+        }
+        if (col < 0 || col >= gridArray[0].length || row < 0 || row >= gridArray.length) {
+          continue;
+        }
+        if (gridArray[row][col] !== 0) {
+          continue;
+        }
+        const distance = Math.abs(col - startCol) + Math.abs(row - startRow);
+        if (distance > maxDistance) {
+          continue;
+        }
+        if (isObstacleBetween(node.col, node.row, col, row)) {
+          continue;
+        }
+        neighbors.push({ col, row });
+      }
+    }
+    return neighbors;
+  }
+
+  function isObstacleBetween(startCol, startRow, endCol, endRow) {
+    const dx = Math.abs(endCol - startCol);
+    const dy = Math.abs(endRow - startRow);
+    const sx = startCol < endCol ? 1 : -1;
+    const sy = startRow < endRow ? 1 : -1;
+    let err = dx - dy;
+    while (startCol !== endCol || startRow !== endRow) {
+      const e2 = err * 2;
+      if (e2 > -dy) {
+        err -= dy;
+        startCol += sx;
+      }
+      if (e2 < dx) {
+        err += dx;
+        startRow += sy;
+      }
+      if (gridArray[startRow][startCol] !== 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
