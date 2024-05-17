@@ -104,17 +104,18 @@ function init() {
 
   // Update the stage on each tick
   createjs.Ticker.on("tick", () => {
-
-    // Clear the stage and redraw the grid to show updated starting positions
-    stage.removeAllChildren();
     checkDeath();
-    
-    drawGrid();
- // Re-add players to the stage
-    drawUnits();
+
+    draw();
+    // Clear the stage and redraw the grid to show updated starting positions
+  
    
     
-stage.update();
+  
+
+   
+    
+
   });
 }
 
