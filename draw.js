@@ -91,3 +91,25 @@
     unit.sprite.gotoAndStop( unit.frame);
   });
   }
+
+
+  function drawPath() {
+    if (selected) {
+      const path = findPath(selected.scol, selected.srow, selected.col, selected.row, selected.movement);
+      path.forEach(([col, row]) => {
+        const square = new createjs.Shape();
+        square.graphics.beginFill("green").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
+        square.x = col * GRID_SIZE;
+        square.y = row * GRID_SIZE;
+        stage.addChild(square);
+      });
+    }
+  }
+
+  function draw() {
+    stage.removeAllChildren();
+    drawGrid();
+    drawUnits();
+    drawPath();
+    stage.update();
+  }
