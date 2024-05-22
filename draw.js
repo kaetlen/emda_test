@@ -34,7 +34,7 @@
       row.forEach((cell, i) => {
         const square = new createjs.Shape();
         const isUnitHere = [...friendlyUnits, ...enemyUnits].some(unit => unit.srow === j && unit.scol === i);
-        const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement); //&& !isObstacleBetween(selected.scol, selected.srow, i, j);
+       const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement)&&gridArray[j][i] === 0;
 
 
 
@@ -94,22 +94,23 @@
 
 
   function drawPath() {
-    if (selected) {
-      const path = findPath(selected.scol, selected.srow, selected.col, selected.row, selected.movement);
-      path.forEach(([col, row]) => {
-        const square = new createjs.Shape();
-        square.graphics.beginFill("green").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
-        square.x = col * GRID_SIZE;
-        square.y = row * GRID_SIZE;
-        stage.addChild(square);
-      });
-    }
+  if (selected) {
+    const path = findPath(selected.scol, selected.srow, selected.col, selected.row, selected.movement);
+    const line = new createjs.Shape();
+    line.graphics.setStrokeStyle(2).beginStroke("green");
+    line.graphics.moveTo(selected.scol * GRID_SIZE + GRID_SIZE / 2, selected.srow * GRID_SIZE + GRID_SIZE / 2);
+    path.forEach((step) => {
+      line.graphics.lineTo(step.col * GRID_SIZE + GRID_SIZE / 2, step.row * GRID_SIZE + GRID_SIZE / 2);
+    });
+    stage.addChild(line);
   }
+}
 
   function draw() {
     stage.removeAllChildren();
     drawGrid();
-    drawUnits();
     drawPath();
+    drawUnits();
+    
     stage.update();
   }

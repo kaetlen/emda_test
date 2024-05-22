@@ -13,7 +13,7 @@ const SPRITE_HEIGHT = 64;
 
  // Define the unit class
   class Unit {
-    constructor(row, col, health = 10, movement = 5, attack = 10, defense = 0, range = [1, 1], maxActions = 1, maxBonusActions = 1) {
+    constructor(row, col, health = 10, movement = 5, attack = [3,5], defense = 0, range = [1, 1], maxActions = 1, maxBonusActions = 1) {
       this.sprite = new createjs.Sprite(spriteSheet, 'run');
       this.row = row;
       this.col = col;
