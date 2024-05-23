@@ -46,9 +46,12 @@
 
 square.alpha = .4;
      if (isUnitHere) {
-        
+        if (gridArray[j][i] === 2) {
+          square.graphics.beginFill("red").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
+        }
+        else{
         square.graphics.beginFill("blue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
-       
+        }
       }
       else if (isValidMove) {
        
