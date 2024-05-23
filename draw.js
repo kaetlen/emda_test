@@ -44,7 +44,7 @@ stage.addChildAt(background, 0);
     
       const isUnitHere = [...friendlyUnits, ...enemyUnits].some(unit => unit.srow === j && unit.scol === i);
      const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement)&&gridArray[j][i] === 0;
-     const isObstacle = gridArray[j][i] === 3;
+     const isObstacle = selected && gridArray[j][i] === 3;
      const isValidAttack = selected && findPath(selected.col, selected.row, i, j, selected.range[1])&&gridArray[j][i] === 2;
     
      const isSelect = selected && selected.srow === j && selected.scol === i;
@@ -76,7 +76,7 @@ square.alpha = .4;
       
     
        else if (isObstacle) {
-      square.graphics.beginFill("red").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
+      square.graphics.beginFill("gray").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
      
     }
       
