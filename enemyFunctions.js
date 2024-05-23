@@ -46,3 +46,7 @@ function enemyTurn() {
 
   endTurn();
 }
+
+enemyMovetoPoint = (enemy, target) => {
+const attacksquares =target.getNeighbors(target, target.col, target.row, target.range[1], target.range[0])
+}
