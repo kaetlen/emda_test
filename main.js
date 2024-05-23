@@ -12,8 +12,10 @@ function init() {
  gridArray[5][12] = 3;
 
 
- friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run')), new Unit("knight",1, 1,new createjs.Sprite(knightSpriteSheet, 'run')),
- new Unit("rouge",0, 0,new createjs.Sprite(rougeSpriteSheet, 'run'),range=[2,4]), new Unit("mage",2, 0,new createjs.Sprite(gobSpriteSheet, 'run'))];
+ friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run'),10, 5, [3, 5], 0, [2, 4]),
+  new Unit("knight",1, 1,new createjs.Sprite(knightSpriteSheet, 'run')),
+ new Unit("rouge",0, 0,new createjs.Sprite(rougeSpriteSheet, 'run')),
+  new Unit("mage",2, 0,new createjs.Sprite(gobSpriteSheet, 'run'))];
  
 enemyUnits = [new Unit("gobbo",10, 10,new createjs.Sprite(gobSpriteSheet, 'run'))];
 
