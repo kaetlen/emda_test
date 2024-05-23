@@ -1,148 +1,169 @@
 /* global createjs */
 
 
-  const canvas = document.getElementById('myCanvas');
-  const stage = new createjs.Stage(canvas);
+const canvas = document.getElementById('myCanvas');
+const stage = new createjs.Stage(canvas);
 
-  // Adjusted URL for sprite sheet
-  const spriteSheetURL = 'images/box_128.png';
-  const image = new Image();
-  image.src = spriteSheetURL;
-  image.crossOrigin = true;
+// Adjusted URL for sprite sheet
+const spriteSheetURL = 'images/box_128.png';
+const image = new Image();
+image.src = spriteSheetURL;
+image.crossOrigin = true;
 
-  // Create sprite sheet
-  const spriteSheet = new createjs.SpriteSheet({
-    images: [image],
-    frames: { width: SPRITE_WIDTH, height: SPRITE_HEIGHT },
-    animations: { run: [0, 3] }
-  });
+// Create sprite sheet
+const spriteSheet = new createjs.SpriteSheet({
+  images: [image],
+  frames: { width: SPRITE_WIDTH, height: SPRITE_HEIGHT },
+  animations: { run: [0, 3] }
+});
 
-  let currentFrameIndex = 0;
-
-
+let currentFrameIndex = 0;
 
 
 
 
-  // Create a square shape for the grid
-  function drawGrid() {
-    const background = new createjs.Bitmap("images/background1.png");
-  background.scaleX = canvas.width / background.image.width;
-  background.scaleY = canvas.height / background.image.height;
-  stage.addChildAt(background, 0);
+
+
+// Create a square shape for the grid
+function drawGrid() {
+  const background = new createjs.Bitmap("images/background1.png");
+background.scaleX = canvas.width / background.image.width;
+background.scaleY = canvas.height / background.image.height;
+stage.addChildAt(background, 0);
+  
+  const GRID_COLORS = ["grey", "black", "red"];
+  let activeColor = 0;
+  let ySelect = 0;
+
+  gridArray.forEach((row, j) => {
+    let xSelect = 0;
+
+    row.forEach((cell, i) => {
+      const square = new createjs.Shape();
+      const selectSquare= new createjs.Shape();
     
-    const GRID_COLORS = ["grey", "black", "red"];
-    let activeColor = 0;
-    let ySelect = 0;
-
-    gridArray.forEach((row, j) => {
-      let xSelect = 0;
-
-      row.forEach((cell, i) => {
-        const square = new createjs.Shape();
-        const selectSquare= new createjs.Shape();
-      
-        const isUnitHere = [...friendlyUnits, ...enemyUnits].some(unit => unit.srow === j && unit.scol === i);
-       const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement)&&gridArray[j][i] === 0;
-       const isObstacle = gridArray[j][i] === 3;
-       const isValidAttack = selected && findPath(selected.scol, selected.srow, i, j, selected.range)&&gridArray[j][i] === 2;
-       const isSelect = selected && selected.srow === j && selected.scol === i;
+      const isUnitHere = [...friendlyUnits, ...enemyUnits].some(unit => unit.srow === j && unit.scol === i);
+     const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement)&&gridArray[j][i] === 0;
+     const isObstacle = gridArray[j][i] === 3;
+     const isValidAttack = selected && findPath(selected.col, selected.row, i, j, selected.range[1])&&gridArray[j][i] === 2;
+    
+     const isSelect = selected && selected.srow === j && selected.scol === i;
 
 
 square.alpha = .4;
-     if (isUnitHere) {
-        if (gridArray[j][i] === 2) {
-          square.graphics.beginFill("red").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
-        }
-        else{
-        square.graphics.beginFill("blue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
-        }
+      if (isSelect) {
+      selectSquare.graphics.beginFill("blue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
+      selectSquare.x = xSelect;
+      selectSquare.y = ySelect;
+      selectSquare.alpha = 1;
+      ;
+    }
+       else if (isValidAttack) {
+      selectSquare.graphics.beginFill("red").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
+      selectSquare.x = xSelect;
+      selectSquare.y = ySelect;
+    selectSquare.alpha = 1;
+      ;
+    }
+      else if (isUnitHere) {
+      if (gridArray[j][i] === 2) {
+        square.graphics.beginFill("red").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
       }
-      else if (isValidMove) {
-       
-        square.graphics.beginFill("lightblue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
-       ;
+      else{
+      square.graphics.beginFill("blue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
       }
-      else if (isObstacle) {
-      }
-      else if (isValidAttack) {
-        selectSquare.graphics.beginFill("red").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
-        ;
-      }
-      else if (isSelect) {
-        selectSquare.graphics.beginFill("blue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
-        ;
-      }
-   
+    }
       
-   // else {
-   //   square.graphics.beginFill(GRID_COLORS[cell === 0 ? activeColor : 2]).drawRect(0, 0, GRID_SIZE, GRID_SIZE)
-    //  square.alpha = 0.1;
-    // }
+    
+       else if (isObstacle) {
+      square.graphics.beginFill("red").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
+     
+    }
+      
+    else if (isValidMove) {
+     
+      square.graphics.beginFill("lightblue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
+     ;
+    }
+   
+ 
+   
+ 
+    
+ // else {
+ //   square.graphics.beginFill(GRID_COLORS[cell === 0 ? activeColor : 2]).drawRect(0, 0, GRID_SIZE, GRID_SIZE)
+  //  square.alpha = 0.1;
+  // }
 
-        // Add lines to the grid
-        
-        square.graphics.setStrokeStyle(.5).beginStroke("black");
-        square.graphics.moveTo(0, 0).lineTo(GRID_SIZE, 0);
-        square.graphics.moveTo(GRID_SIZE, 0).lineTo(GRID_SIZE, GRID_SIZE);
-        square.graphics.moveTo(GRID_SIZE, GRID_SIZE).lineTo(0, GRID_SIZE);
-        square.graphics.moveTo(0, GRID_SIZE).lineTo(0, 0);
+      // Add lines to the grid
+      
+      square.graphics.setStrokeStyle(.5).beginStroke("black");
+      square.graphics.moveTo(0, 0).lineTo(GRID_SIZE, 0);
+      square.graphics.moveTo(GRID_SIZE, 0).lineTo(GRID_SIZE, GRID_SIZE);
+      square.graphics.moveTo(GRID_SIZE, GRID_SIZE).lineTo(0, GRID_SIZE);
+      square.graphics.moveTo(0, GRID_SIZE).lineTo(0, 0);
 
 
-        square.x = xSelect;
-        square.y = ySelect;
+      square.x = xSelect;
+      square.y = ySelect;
 
-        xSelect += GRID_SIZE;
-        activeColor = (activeColor + 1) % GRID_COLORS.length;
-        if (activeColor > 1) {
-          activeColor = 0;
-        }
-        // Add square to the stage
-        stage.addChild(square);
-      });
+      xSelect += GRID_SIZE;
+      activeColor = (activeColor + 1) % GRID_COLORS.length;
+      if (activeColor > 1) {
+        activeColor = 0;
+      }
+      // Add square to the stage
+      
 
-      ySelect += GRID_SIZE;
+    
+    if (isValidAttack || isSelect) {
+        stage.addChild(selectSquare);
+      }
+      else{stage.addChild(square);}
     });
-  }
 
- function drawUnits(){
-    // Add units to the stage and update gridArray
-  friendlyUnits.forEach(unit => {
-     unit.sprite.x = unit.col * GRID_SIZE;
-      unit.sprite.y = unit.row * GRID_SIZE;
-    stage.addChild(unit.sprite);
-    gridArray[unit.srow][unit.scol] = 1;
-   unit.sprite.gotoAndStop( unit.frame);
+    ySelect += GRID_SIZE;
   });
-
-  enemyUnits.forEach(unit => {
-     unit.sprite.x = unit.col * GRID_SIZE;
-      unit.sprite.y = unit.row * GRID_SIZE;
-    stage.addChild(unit.sprite);
-    gridArray[unit.srow][unit.scol] = 2;
-    unit.sprite.gotoAndStop( unit.frame);
-  });
-  }
-
-
-  function drawPath() {
-  if (selected) {
-    const path = findPath(selected.scol, selected.srow, selected.col, selected.row, selected.movement);
-    const line = new createjs.Shape();
-    line.graphics.setStrokeStyle(2).beginStroke("green");
-    line.graphics.moveTo(selected.scol * GRID_SIZE + GRID_SIZE / 2, selected.srow * GRID_SIZE + GRID_SIZE / 2);
-    path.forEach((step) => {
-      line.graphics.lineTo(step.col * GRID_SIZE + GRID_SIZE / 2, step.row * GRID_SIZE + GRID_SIZE / 2);
-    });
-    stage.addChild(line);
-  }
 }
 
-  function draw() {
-    stage.removeAllChildren();
-    drawGrid();
-    drawPath();
-    drawUnits();
-    
-    stage.update();
-  }
+function drawUnits(){
+  // Add units to the stage and update gridArray
+friendlyUnits.forEach(unit => {
+   unit.sprite.x = unit.col * GRID_SIZE;
+    unit.sprite.y = unit.row * GRID_SIZE;
+  stage.addChild(unit.sprite);
+  gridArray[unit.srow][unit.scol] = 1;
+ unit.sprite.gotoAndStop( unit.frame);
+});
+
+enemyUnits.forEach(unit => {
+   unit.sprite.x = unit.col * GRID_SIZE;
+    unit.sprite.y = unit.row * GRID_SIZE;
+  stage.addChild(unit.sprite);
+  gridArray[unit.srow][unit.scol] = 2;
+  unit.sprite.gotoAndStop( unit.frame);
+});
+}
+
+
+function drawPath() {
+if (selected) {
+  const path = findPath(selected.scol, selected.srow, selected.col, selected.row, selected.movement);
+  const line = new createjs.Shape();
+  line.graphics.setStrokeStyle(2).beginStroke("green");
+  line.graphics.moveTo(selected.scol * GRID_SIZE + GRID_SIZE / 2, selected.srow * GRID_SIZE + GRID_SIZE / 2);
+  path.forEach((step) => {
+    line.graphics.lineTo(step.col * GRID_SIZE + GRID_SIZE / 2, step.row * GRID_SIZE + GRID_SIZE / 2);
+  });
+  stage.addChild(line);
+}
+}
+
+function draw() {
+  stage.removeAllChildren();
+  drawGrid();
+  drawPath();
+  drawUnits();
+  
+  stage.update();
+}
