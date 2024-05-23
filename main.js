@@ -12,8 +12,8 @@ function init() {
  gridArray[5][12] = 3;
 
 
- friendlyUnits = [new Unit(10, 5), new Unit(0, 0)];
-enemyUnits = [new Unit(10, 10)];
+ friendlyUnits = [new Unit("archer",10, 5,new createjs.Sprite(archerSpriteSheet, 'run')), new Unit("knight",0, 0,new createjs.Sprite(knightSpriteSheet, 'run'))];
+enemyUnits = [new Unit("gobbo",10, 10,new createjs.Sprite(gobSpriteSheet, 'run'))];
 
  
 
@@ -71,7 +71,7 @@ enemyUnits = [new Unit(10, 10)];
      moveToPoint(mouseX, mouseY, selected);
      
    }
-selected=null
+//selected=null
    
    
    
