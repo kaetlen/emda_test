@@ -23,7 +23,7 @@ enemyUnits = [new Unit("gobbo",10, 10,new createjs.Sprite(gobSpriteSheet, 'run')
 
  // Initial grid drawing
  drawGrid();
-
+ addGridNumbers() 
  
 
  drawUnits();

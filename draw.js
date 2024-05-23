@@ -145,6 +145,14 @@ enemyUnits.forEach(unit => {
 });
 }
 
+function addGridNumbers() {
+  const text = new createjs.Text("0", "20px Arial", "black");
+  text.textBaseline = "alphabetic";
+  text.textAlign = "start";
+  text.x = 0;
+  text.y = 0;
+  stage.addChild(text);
+}
 
 function drawPath() {
 if (selected) {
