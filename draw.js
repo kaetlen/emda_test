@@ -1,7 +1,6 @@
 /* global createjs */
 
 
-
   const canvas = document.getElementById('myCanvas');
   const stage = new createjs.Stage(canvas);
 
@@ -22,8 +21,16 @@
 
 
 
+
+
+
   // Create a square shape for the grid
   function drawGrid() {
+    const background = new createjs.Bitmap("images/background1.png");
+  background.scaleX = canvas.width / background.image.width;
+  background.scaleY = canvas.height / background.image.height;
+  stage.addChildAt(background, 0);
+    
     const GRID_COLORS = ["grey", "black", "red"];
     let activeColor = 0;
     let ySelect = 0;
@@ -37,19 +44,25 @@
        const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement)&&gridArray[j][i] === 0;
 
 
-
-        if (isUnitHere) {
-          square.graphics.beginFill("blue").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
-        }
-        else if (isValidMove) {
-          square.graphics.beginFill("lightblue").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
-        }
-        else {
-          square.graphics.beginFill(GRID_COLORS[cell === 0 ? activeColor : 2]).drawRect(0, 0, GRID_SIZE, GRID_SIZE);
-        }
-
+square.alpha = .4;
+     if (isUnitHere) {
+        
+        square.graphics.beginFill("blue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
+       
+      }
+      else if (isValidMove) {
+       
+        square.graphics.beginFill("lightblue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
+       ;
+      }
+      
+   // else {
+   //   square.graphics.beginFill(GRID_COLORS[cell === 0 ? activeColor : 2]).drawRect(0, 0, GRID_SIZE, GRID_SIZE)
+    //  square.alpha = 0.1;
+    // }
 
         // Add lines to the grid
+        
         square.graphics.setStrokeStyle(.5).beginStroke("black");
         square.graphics.moveTo(0, 0).lineTo(GRID_SIZE, 0);
         square.graphics.moveTo(GRID_SIZE, 0).lineTo(GRID_SIZE, GRID_SIZE);
