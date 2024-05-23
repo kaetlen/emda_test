@@ -40,8 +40,13 @@
 
       row.forEach((cell, i) => {
         const square = new createjs.Shape();
+        const selectSquare= new createjs.Shape();
+      
         const isUnitHere = [...friendlyUnits, ...enemyUnits].some(unit => unit.srow === j && unit.scol === i);
        const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement)&&gridArray[j][i] === 0;
+       const isObstacle = gridArray[j][i] === 3;
+       const isValidAttack = selected && findPath(selected.scol, selected.srow, i, j, selected.range)&&gridArray[j][i] === 2;
+       const isSelect = selected && selected.srow === j && selected.scol === i;
 
 
 square.alpha = .4;
@@ -58,6 +63,17 @@ square.alpha = .4;
         square.graphics.beginFill("lightblue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
        ;
       }
+      else if (isObstacle) {
+      }
+      else if (isValidAttack) {
+        selectSquare.graphics.beginFill("red").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
+        ;
+      }
+      else if (isSelect) {
+        selectSquare.graphics.beginFill("blue").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
+        ;
+      }
+   
       
    // else {
    //   square.graphics.beginFill(GRID_COLORS[cell === 0 ? activeColor : 2]).drawRect(0, 0, GRID_SIZE, GRID_SIZE)

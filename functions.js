@@ -118,6 +118,7 @@ enemyUnits.splice(enemyUnits.indexOf(unit), 1);
 }
 
 
+
 function isValidStep(unit, step) {
   // Check if the step is within the grid
   if (step.col < 0 || step.row < 0 || step.col >= GRID_WIDTH || step.row >= GRID_HEIGHT) {
