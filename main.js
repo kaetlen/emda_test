@@ -7,9 +7,7 @@
 function init() {
   
 
-  gridArray[5][10] = 3;
- gridArray[5][11] = 3;
- gridArray[5][12] = 3;
+  
 
 
  friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run'),10, 5, [3, 5], 0, [2, 4]),
@@ -23,7 +21,7 @@ enemyUnits = [new Unit("gobbo",10, 10,new createjs.Sprite(gobSpriteSheet, 'run')
 
  // Initial grid drawing
  drawGrid();
- addGridNumbers() 
+ addGridNumbers(); 
  
 
  drawUnits();

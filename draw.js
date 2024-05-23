@@ -45,7 +45,7 @@ stage.addChildAt(background, 0);
       const isUnitHere = [...friendlyUnits, ...enemyUnits].some(unit => unit.srow === j && unit.scol === i);
      const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement)&&gridArray[j][i] === 0;
      const isObstacle = selected && gridArray[j][i] === 3;
-     const isValidAttack = selected && findPath(selected.col, selected.row, i, j, selected.range[1])&&gridArray[j][i] === 2;
+     const isValidAttack = selected && selected.actions>0  && findPath(selected.col, selected.row, i, j, selected.range[1])&&gridArray[j][i] === 2;
     
      const isSelect = selected && selected.srow === j && selected.scol === i;
 
@@ -144,7 +144,7 @@ enemyUnits.forEach(unit => {
   unit.sprite.gotoAndStop( unit.frame);
 });
 }
-
+//not functional
 function addGridNumbers() {
   const text = new createjs.Text("0", "20px Arial", "black");
   text.textBaseline = "alphabetic";
