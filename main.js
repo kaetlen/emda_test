@@ -16,9 +16,9 @@ function init() {
   new Unit("mage",2, 0,new createjs.Sprite(gobSpriteSheet, 'run'),8, 10, 10, 18, 8, 10,[1,4], 0, [1, 1], 1, 1),
 ];
  
-enemyUnits = [new Unit("gobbo",10, 10,new createjs.Sprite(gobSpriteSheet, 'run')),
-  new Unit("gobbo",10, 11,new createjs.Sprite(gobSpriteSheet, 'run')),
-  new Unit("gobbo",11, 10,new createjs.Sprite(gobSpriteSheet, 'run')),
+enemyUnits = [new Unit("gobbo",10, 10,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+  new Unit("gobbo",10, 11,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+  new Unit("gobbo",11, 10,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
   
 ];
 
