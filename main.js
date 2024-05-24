@@ -10,16 +10,16 @@ function init() {
   
 
 ///////////////////////////////////////// strength, dextarity, constitution, inteligence, wisdom, carisma,weponDamage defense, range = [1, 1], maxActions, maxBonusActions
- friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run'),10, 18, 12, 8, 8, 10,[1,4], 0, [1.1, 4], 1, 1),
-  new Unit("knight",1, 1,new createjs.Sprite(knightSpriteSheet, 'run'),18, 10, 16, 8, 8, 8,[2,6], 4, [1, 1], 1, 1),
- new Unit("rouge",0, 0,new createjs.Sprite(rougeSpriteSheet, 'run'),10, 20, 10, 8, 8, 10,[1,4], 0, [1, 1], 1, 1),
-  new Unit("mage",2, 0,new createjs.Sprite(gobSpriteSheet, 'run'),8, 10, 10, 18, 8, 10,[1,4], 0, [1, 1], 1, 1),
+friendlyUnits = [new Unit("archer",3, 0,new createjs.Sprite(archerSpriteSheet, 'run'),10, 18, 12, 8, 8, 10,[1,4], 0, [1.1, 4], 1, 1),
+new Unit("knight",4, 1,new createjs.Sprite(knightSpriteSheet, 'run'),18, 10, 16, 8, 8, 8,[2,6], 4, [1, 1], 1, 1),
+new Unit("rouge",0, 2,new createjs.Sprite(rougeSpriteSheet, 'run'),10, 20, 10, 8, 8, 10,[1,4], 0, [1, 1], 1, 1),
+new Unit("mage",1, 1,new createjs.Sprite(gobSpriteSheet, 'run'),8, 10, 10, 18, 8, 10,[1,4], 0, [1, 1], 1, 1),
 ];
- 
-enemyUnits = [new Unit("gobbo",10, 10,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
-  new Unit("gobbo",10, 11,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
-  new Unit("gobbo",11, 10,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
-  
+
+enemyUnits = [new Unit("gobbo",11, 20,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+new Unit("gobbo",8, 17,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+new Unit("gobbo",11, 10,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+
 ];
 
  

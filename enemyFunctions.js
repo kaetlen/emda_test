@@ -16,6 +16,7 @@ function findattackPosition(unit,target,minRange,maxRange){
       inRangePositions.push(attackPositions[i])
     }
   }
+  let nearestPosition = attackPositions[0];
   return inRangePositions.length > 0 ? inRangePositions[randomInt(0,inRangePositions.length-1)] : null;
 }
 
@@ -61,6 +62,9 @@ function enemyTurn() {
             attack(enemy, target);
           }
         }
+      }
+      else{
+        
       }
     }
   });
