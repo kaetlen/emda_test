@@ -5,6 +5,7 @@
     attacker.actions--;
 if(randomInt(1,100)+attacker.accuracy>=10+defender.doge){
     defender.health -= Math.max( (attacker.attack+randomInt(attacker.weponDamage[0],attacker.weponDamage[1]))-defender.defense,1);
+   console.log("target health", defender.health);
 }
 else{
   console.log("missed");
@@ -20,7 +21,7 @@ else{
     else {
       gridArray[attacker.row][attacker.col] = 2;
     }
-    console.log("target health", defender.health);
+   
     console.log("attacker actions at", attacker.actions);}
 
 function distanceBetween(col1, row1, col2, row2) {
