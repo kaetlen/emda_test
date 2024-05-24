@@ -29,6 +29,7 @@ const gridArray=[
 ];
 let turn = 'friendly';
   let selected = null;
+  let oldSelected = null;
   let target = null;
 
 
