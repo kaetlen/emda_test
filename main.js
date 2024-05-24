@@ -9,8 +9,8 @@ function init() {
 
   
 
-
- friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run'),10, 5, [3, 5], 0, [1.1, 4]),
+///////////////////////////////////////// strength, dextarity, constitution, inteligence, wisdom, carisma, defense, range = [1, 1], maxActions, maxBonusActions
+ friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run'),10, 10, 10, 10, 10, 10, 0, [1, 3], 1, 1),
   new Unit("knight",1, 1,new createjs.Sprite(knightSpriteSheet, 'run')),
  new Unit("rouge",0, 0,new createjs.Sprite(rougeSpriteSheet, 'run')),
   new Unit("mage",2, 0,new createjs.Sprite(gobSpriteSheet, 'run'))
@@ -101,7 +101,7 @@ if (selected != null) {
   
    if (selected != undefined) {
      console.log("selected is ", selected);
-     if (target != undefined && distance <= selected.range[1] && distance >= selected.range[0] && selected.actions > 0) {
+     if (target != undefined && distance <= selected.range[1] && distance >= selected.range[0] && selected.actions > 0 && isObstacleBetween(selected.col, selected.row, target.col, target.row) === false) {
      
        
        attack(selected,target);
