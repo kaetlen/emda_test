@@ -40,7 +40,7 @@ const GRID_WIDTH = 64
 const GRID_HEIGHT = 64
  // Define the unit class
   class Unit {
-    constructor(name, row, col,sprite=new createjs.Sprite(spriteSheet, 'run'),strength=10, dextarity=10, constitution=10, inteligence=10, wisdom=10, carisma=10, defense = 0, range = [1, 1], maxActions = 1, maxBonusActions = 1) {
+    constructor(name, row, col,sprite=new createjs.Sprite(spriteSheet, 'run'),strength=10, dextarity=10, constitution=10, inteligence=10, wisdom=10, carisma=10, weponDamage=[1,1], defense = 0, range = [1, 1], maxActions = 1, maxBonusActions = 1) {
       this.name=name
       this.strength = strength;
       this.dextarity = dextarity;
@@ -57,6 +57,7 @@ const GRID_HEIGHT = 64
       this.movement = this.maxMovement;
       this.health = 10+Math.ceil((this.constitution-10)/2); 
       this.attack = Math.max( Math.floor((this.strength-10)/2),Math.floor((this.dextarity-10)/2));
+      this.weponDamage=[weponDamage[0],weponDamage[1]]
       this.defense = defense;
       this.range = range;
       this.maxActions = maxActions;

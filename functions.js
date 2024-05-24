@@ -3,7 +3,7 @@
   function attack(attacker,defender){
     console.log("attacking", defender);
     attacker.actions--;
-    defender.health -= Math.max( randomInt(attacker.attack[0], attacker.attack[1])-defender.defense,1);
+    defender.health -= Math.max( randomInt(attacker.weponDamage)-defender.defense,1);
     attacker.movement -= Math.floor(Math.sqrt(Math.pow(attacker.scol - attacker.col, 2) + Math.pow(attacker.srow - attacker.row, 2)));
     gridArray[attacker.srow][attacker.scol] = 0;
     attacker.scol = attacker.col;

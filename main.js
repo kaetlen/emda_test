@@ -10,7 +10,7 @@ function init() {
   
 
 ///////////////////////////////////////// strength, dextarity, constitution, inteligence, wisdom, carisma, defense, range = [1, 1], maxActions, maxBonusActions
- friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run'),10, 10, 10, 10, 10, 10, 0, [1, 3], 1, 1),
+ friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run'),10, 18, 12, 8, 8, 10, 0, [1.1, 4], 1, 1),
   new Unit("knight",1, 1,new createjs.Sprite(knightSpriteSheet, 'run')),
  new Unit("rouge",0, 0,new createjs.Sprite(rougeSpriteSheet, 'run')),
   new Unit("mage",2, 0,new createjs.Sprite(gobSpriteSheet, 'run'))
