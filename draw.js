@@ -45,7 +45,7 @@ stage.addChildAt(background, 0);
       const isUnitHere = [...friendlyUnits, ...enemyUnits].some(unit => unit.srow === j && unit.scol === i);
      const isValidMove = selected && findPath(selected.scol, selected.srow, i, j, selected.movement)&&gridArray[j][i] === 0;
      const isObstacle = selected && gridArray[j][i] === 3;
-     const isValidAttack = selected && selected.actions>0  && findPath(selected.col, selected.row, i, j, selected.range[1])&&gridArray[j][i] === 2;
+     const isValidAttack = selected && selected.actions>0  && findPath(selected.col, selected.row, i, j, selected.range[1],selected.range[0])&&gridArray[j][i] === 2;
     
      const isSelect = selected && selected.srow === j && selected.scol === i;
 

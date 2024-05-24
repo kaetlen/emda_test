@@ -10,7 +10,7 @@ function init() {
   
 
 
- friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run'),10, 5, [3, 5], 0, [2, 4]),
+ friendlyUnits = [new Unit("archer",10, 3,new createjs.Sprite(archerSpriteSheet, 'run'),10, 5, [3, 5], 0, [1.1, 4]),
   new Unit("knight",1, 1,new createjs.Sprite(knightSpriteSheet, 'run')),
  new Unit("rouge",0, 0,new createjs.Sprite(rougeSpriteSheet, 'run')),
   new Unit("mage",2, 0,new createjs.Sprite(gobSpriteSheet, 'run'))
@@ -110,8 +110,8 @@ if (selected != null) {
    }
    if (oldSelected != selected) {
     if(oldSelected != null){
-    oldSelected.scol = oldSelected.col;
-    oldSelected.srow = oldSelected.row;
+    oldSelected.col = oldSelected.scol;
+    oldSelected.row = oldSelected.srow;
     }
      oldSelected = selected;
    }
