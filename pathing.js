@@ -73,7 +73,7 @@ class PriorityQueue {
   }
 }
 
-function findPath(startCol, startRow, endCol, endRow, maxDistance) {
+function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0) {
   const openList = new PriorityQueue((a, b) => a.f < b.f);
   const closedList = new Set();
   const cameFrom = Array(gridArray.length).fill().map(() => Array(gridArray[0].length).fill(null));
@@ -95,8 +95,11 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance) {
         const dy = path[i].row - path[i - 1].row;
         distance += (dx !== 0 && dy !== 0) ? Math.sqrt(2) : 1;
       }
-      return distance <= maxDistance ? path : null;
-      //return path
+      if (distance <= maxDistance && distance >= minDistance) {
+        return path;
+      } else {
+        return null;
+      }
     }
 
     closedList.add(`${currentNode.col},${currentNode.row}`);
@@ -126,7 +129,7 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance) {
       }
     }
   }
-console.log('not in reach')
+
   // If no path found within maxDistance, return the farthest reachable point
   let maxReachableNode = null;
   let maxReachableDistance = -Infinity;
@@ -151,7 +154,7 @@ console.log('not in reach')
   return null;
 }
 
-function getNeighbors(node, startCol, startRow, maxDistance, minDistance=1) {
+function getNeighbors(node, startCol) {
   const neighbors = [];
   for (let col = node.col - 1; col <= node.col + 1; col++) {
     for (let row = node.row - 1; row <= node.row + 1; row++) {
@@ -162,10 +165,7 @@ function getNeighbors(node, startCol, startRow, maxDistance, minDistance=1) {
         continue;
       }
     
-      const distance = Math.abs(col - startCol) + Math.abs(row - startRow);
-      if (distance > maxDistance || distance < minDistance) {
-        continue;
-      }
+   
       if (isObstacleBetween(node.col, node.row, col, row)) {
         continue;
       }
@@ -173,6 +173,29 @@ function getNeighbors(node, startCol, startRow, maxDistance, minDistance=1) {
     }
   }
   return neighbors;
+}
+
+function isObstacleBetween(startCol, startRow, endCol, endRow) {
+  const dx = Math.abs(endCol - startCol);
+  const dy = Math.abs(endRow - startRow);
+  const sx = startCol < endCol ? 1 : -1;
+  const sy = startRow < endRow ? 1 : -1;
+  let err = dx - dy;
+  while (startCol !== endCol || startRow !== endRow) {
+    const e2 = err * 2;
+    if (e2 > -dy) {
+      err -= dy;
+      startCol += sx;
+    }
+    if (e2 < dx) {
+      err += dx;
+      startRow += sy;
+    }
+    if (gridArray[startRow][startCol] !== 0) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function getGridPosition(x, y) {

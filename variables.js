@@ -36,7 +36,7 @@ const GRID_SIZE = 64;
 const SPRITE_WIDTH = 64;
 const SPRITE_HEIGHT = 64;
 const GRID_WIDTH = 64
-const GRIS_HIGHT = 64
+const GRID_HEIGHT = 64
  // Define the unit class
   class Unit {
     constructor(name, row, col,sprite=new createjs.Sprite(spriteSheet, 'run'), health = 10, movement = 5, attack = [3,5], defense = 0, range = [1, 1], maxActions = 1, maxBonusActions = 1) {
