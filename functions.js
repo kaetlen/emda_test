@@ -3,7 +3,13 @@
   function attack(attacker,defender){
     console.log("attacking", defender);
     attacker.actions--;
+if(randomInt(1,100)+attacker.accuracy>=10+defender.doge){
     defender.health -= Math.max( (attacker.attack+randomInt(attacker.weponDamage[0],attacker.weponDamage[1]))-defender.defense,1);
+}
+else{
+  console.log("missed");
+
+}
     attacker.movement -= Math.floor(Math.sqrt(Math.pow(attacker.scol - attacker.col, 2) + Math.pow(attacker.srow - attacker.row, 2)));
     gridArray[attacker.srow][attacker.scol] = 0;
     attacker.scol = attacker.col;
