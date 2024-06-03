@@ -131,11 +131,13 @@ square.alpha = .4;
 function drawUnits(){
   // Add units to the stage and update gridArray
 friendlyUnits.forEach(unit => {
+  if(unit.health>0){
    unit.sprite.x = unit.col * GRID_SIZE;
     unit.sprite.y = unit.row * GRID_SIZE;
   stage.addChild(unit.sprite);
   gridArray[unit.srow][unit.scol] = 1;
  unit.sprite.gotoAndStop( unit.frame);
+  }
 });
 
 enemyUnits.forEach(unit => {

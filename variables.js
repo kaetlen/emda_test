@@ -138,3 +138,6 @@ const GRID_HEIGHT = 64
 
  var friendlyUnits = []
 var enemyUnits = []
+
+let friendlyDeadUnits = [];
+let enemyDeadUnits = [];

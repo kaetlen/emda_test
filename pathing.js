@@ -78,10 +78,18 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0
   const closedList = new Set();
   const cameFrom = Array(gridArray.length).fill().map(() => Array(gridArray[0].length).fill(null));
 
+  let closestNode = null;
+  let minH = Infinity;
+
   openList.push({ col: startCol, row: startRow, g: 0, h: 0, f: 0 });
 
   while (!openList.isEmpty()) {
     let currentNode = openList.pop();
+    if (currentNode.h < minH) {
+      closestNode = currentNode;
+      minH = currentNode.h;
+    }
+
     if (currentNode.col === endCol && currentNode.row === endRow) {
       const path = [];
       let current = currentNode;
@@ -130,20 +138,9 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0
     }
   }
 
-  // If no path found within maxDistance, return the farthest reachable point
-  let maxReachableNode = null;
-  let maxReachableDistance = -Infinity;
-
-  for (const node of openList._heap) {
-    if (node.g > maxReachableDistance) {
-      maxReachableNode = node;
-      maxReachableDistance = node.g;
-    }
-  }
-
-  if (maxReachableNode) {
+  if (closestNode) {
     const path = [];
-    let current = maxReachableNode;
+    let current = closestNode;
     while (current) {
       path.unshift({ col: current.col, row: current.row });
       current = cameFrom[current.row][current.col];
@@ -154,7 +151,7 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0
   return null;
 }
 
-function getNeighbors(node, startCol) {
+function getNeighbors(node) {
   const neighbors = [];
   for (let col = node.col - 1; col <= node.col + 1; col++) {
     for (let row = node.row - 1; row <= node.row + 1; row++) {
@@ -164,8 +161,6 @@ function getNeighbors(node, startCol) {
       if (col < 0 || col >= gridArray[0].length || row < 0 || row >= gridArray.length) {
         continue;
       }
-    
-   
       if (isObstacleBetween(node.col, node.row, col, row)) {
         continue;
       }

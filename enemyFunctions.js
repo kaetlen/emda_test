@@ -27,7 +27,7 @@ function enemyMove(enemy, position){
   enemy.row = position.row;
   enemy.scol = enemy.col;
   enemy.srow = enemy.row;
-  gridArray[enemy.srow][enemy.scol] = 2;
+  
 }
 
 function inRange(unit, target) {
@@ -48,24 +48,33 @@ function enemyTurn() {
         minDistance = distance;
       }
     });
-    if (target && inRange(enemy, target)&&enemy.actions>0) {
+    if (target && inRange(enemy, target) && enemy.actions > 0) {
       attack(enemy, target);
     }
     else if (target) {
-       position = findattackPosition(enemy, target, enemy.range[0], enemy.range[1]);
+      let position = findattackPosition(enemy, target, enemy.range[0], enemy.range[1]);
       if (position) {
         const path = findPath(enemy.col, enemy.row, position.col, position.row, enemy.movement);
-        if (path) {
+        if (path && path.length > 0) {
           let steps = Math.min(enemy.movement, path.length - 1);
           enemyMove(enemy, path[steps]);
-          if (target && inRange(enemy, target)&&enemy.actions>0) {
+          if (target && inRange(enemy, target) && enemy.actions > 0) {
             attack(enemy, target);
           }
         }
       }
-      else{
+      else {
+        // If no valid attack position is found, move towards the target
+        const path = findPath(enemy.col, enemy.row, target.col, target.row, enemy.movement*3);
+        if (path && path.length > 0) {
+          let steps = Math.min(enemy.movement, path.length - 1);
+          enemyMove(enemy, path[steps]);
+        }
         
       }
+    }
+    else {
+      // If no target is found, the enemy does nothing
     }
   });
   endTurn();

@@ -120,6 +120,7 @@ function newLevel(){
 
     if (friendlyUnits[i].health <= 0) {
       friendlyUnits[i].health = friendlyUnits[i].maxHealth;
+      friendlyDeadUnits.splice(friendlyDeadUnits.indexOf(friendlyUnits[i]), 1);
     }
     friendlyUnits[i].col = i;
     friendlyUnits[i].row = 24;
@@ -143,30 +144,31 @@ function newLevel(){
 }
 
 
-function checkDeath(){
-friendlyUnits.forEach(unit => {
-if (unit.health <= 0) {
+function checkDeath() {
+  
+
+  friendlyUnits.forEach(unit => {
+    if (unit.health <= 0 && !friendlyDeadUnits.includes(unit)) {
+      friendlyDeadUnits.push(unit);
       //unit.sprite.visible = false;
       stage.removeChild(unit.sprite);
 
       gridArray[unit.row][unit.col] = 0;
-      console.log(unit ,"is dead");
- //friendlyUnits.splice(friendlyUnits.indexOf(unit), 1);
+      console.log(unit, "is dead");
     }
-});
+  });
 
-  
-enemyUnits.forEach(unit => {
- if (unit.health <= 0) {
+  enemyUnits.forEach(unit => {
+    if (unit.health <= 0 && !enemyDeadUnits.includes(unit)) {
+      enemyDeadUnits.push(unit);
       //unit.sprite.visible = false;
-     // stage.removeChild(unit.sprite)        
+      // stage.removeChild(unit.sprite)        
 
       gridArray[unit.row][unit.col] = 0;
-      console.log(unit ,"is dead");
-enemyUnits.splice(enemyUnits.indexOf(unit), 1);
- }
-});
-  
+      console.log(unit, "is dead");
+      enemyUnits.splice(enemyUnits.indexOf(unit), 1);
+    }
+  });
 }
 
 
