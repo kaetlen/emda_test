@@ -106,6 +106,7 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
 
 function newLevel(){
   set_background++
+
   if (set_background>=backgrounds.length){
     set_background=0
   }
@@ -121,6 +122,7 @@ function newLevel(){
     
   }
   turn = 'friendly';
+
 }
 
 
