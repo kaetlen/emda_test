@@ -111,9 +111,16 @@ function newLevel(){
     set_background=0
     alert('You Win');
   }
+
   background = backgrounds[set_background]
   gridArray= gridArrays[set_background];
+
   for (let i = 0; i < friendlyUnits.length; i++) {
+    gridArray[friendlyUnits[i].srow][friendlyUnits[i].scol] = 0;
+
+    if (friendlyUnits[i].health <= 0) {
+      friendlyUnits[i].health = friendlyUnits[i].maxHealth;
+    }
     friendlyUnits[i].col = i;
     friendlyUnits[i].row = 24;
     friendlyUnits[i].scol = i;
@@ -123,6 +130,12 @@ function newLevel(){
     friendlyUnits[i].movement = friendlyUnits[i].maxMovement;
     
   }
+
+  for (let i = 0; i < enemyUnits.length; i++) {
+    gridArray[enemyUnits[i].srow][enemyUnits[i].scol] = 0;
+    enemyUnits[i].health=0
+  }
+
   turn = 'friendly';
 
 }
@@ -136,7 +149,7 @@ if (unit.health <= 0) {
 
       gridArray[unit.row][unit.col] = 0;
       console.log(unit ,"is dead");
- friendlyUnits.splice(friendlyUnits.indexOf(unit), 1);
+ //friendlyUnits.splice(friendlyUnits.indexOf(unit), 1);
     }
 });
 
