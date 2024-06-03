@@ -107,6 +107,16 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
 function newLevel(){
   set_background++
   background = backgrounds
+  for (let i = 0; i < friendlyUnits; i++) {
+    friendlyUnits[i].col = i;
+    friendlyUnits[i].row = 0;
+    friendlyUnits[i].scol = i;
+    friendlyUnits[i].srow = 0;
+    gridArray[0][i] = 1;
+    friendlyUnits[i].actions = friendlyUnits[i].maxActions;
+    friendlyUnits[i].movement = friendlyUnits[i].maxMovement;
+    turn = 'friendly';
+  }
 }
 
 
