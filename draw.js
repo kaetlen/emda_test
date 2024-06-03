@@ -23,10 +23,7 @@ let currentFrameIndex = 0;
 
 
 
-const backgrounds = [new createjs.Bitmap("images/background1.png"), new createjs.Bitmap("images/forrest_background.png"), new createjs.Bitmap("images/throne_background.png")]
-var set_background=0
 
-var background = backgrounds[set_background]
 
 
 // Create a square shape for the grid
@@ -80,7 +77,7 @@ square.alpha = .4;
     }
       
     
-        if (isObstacle) {
+       else if (isObstacle) {
       square.graphics.beginFill("gray").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
      
     }
