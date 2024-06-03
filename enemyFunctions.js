@@ -114,7 +114,7 @@ new Unit("gobbo",14, 16,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 1
 }
 
 function spawnLevel3Enemies(){
-  enemyUnits.push(new Unit("Litch",16, 16,new createjs.Sprite(genGobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+  enemyUnits.push(new Unit("Lich",16, 16,new createjs.Sprite(lichSpriteSheet, 'run'),13, 16, 20, 20, 16, 10,[5,8], 3, [1, 5], 2, 1),
   );
 }
 

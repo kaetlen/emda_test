@@ -78,3 +78,16 @@ const genGobSpriteSheet = new createjs.SpriteSheet({
   frames: { width: SPRITE_WIDTH, height: 59 },
   animations: { run: [0, 0] } // Assuming 'run' animation for goblin sprite is only frame 0
 });
+
+
+// lich sprite sheet setup
+const lichSpriteSheetURL = 'images/lichSpritesheet.png';
+const lichImage = new Image();
+lichImage.src = lichSpriteSheetURL;
+lichImage.crossOrigin = true;
+// lich sprite sheet
+const lichSpriteSheet = new createjs.SpriteSheet({
+  images: [lichImage],  // Correct image variable for the goblin sprite sheet
+  frames: { width: 55, height: SPRITE_HEIGHT },
+  animations: { run: [0, 0] } // Assuming 'run' animation for goblin sprite is only frame 0
+});
