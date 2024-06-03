@@ -112,11 +112,11 @@ function newLevel(){
     alert('You Win');
   }
 
-  background = backgrounds[set_background]
-  gridArray= gridArrays[set_background];
+  
 
   for (let i = 0; i < friendlyUnits.length; i++) {
     gridArray[friendlyUnits[i].srow][friendlyUnits[i].scol] = 0;
+    gridArray[friendlyUnits[i].row][friendlyUnits[i].col] = 0;
 
     if (friendlyUnits[i].health <= 0) {
       friendlyUnits[i].health = friendlyUnits[i].maxHealth;
@@ -135,7 +135,9 @@ function newLevel(){
     gridArray[enemyUnits[i].srow][enemyUnits[i].scol] = 0;
     enemyUnits[i].health=0
   }
-
+  
+  background = backgrounds[set_background]
+  gridArray= gridArrays[set_background];
   turn = 'friendly';
 
 }
