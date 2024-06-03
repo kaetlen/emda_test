@@ -139,6 +139,7 @@ function newLevel(){
 
   background = backgrounds[set_background]
   gridArray= gridArrays[set_background];
+  levelSpawnFunctions[set_background]();
   turn = 'friendly';
 
 }

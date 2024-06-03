@@ -42,6 +42,9 @@ function enemyTurn() {
     let target = null;
     let minDistance = Infinity;
     friendlyUnits.forEach(friendly => {
+      if (friendly.health <= 0) {
+        return;
+      }
       const distance = Math.sqrt(Math.pow(friendly.col - enemy.col, 2) + Math.pow(friendly.row - enemy.row, 2));
       if (distance < minDistance) {
         target = friendly;
@@ -88,6 +91,17 @@ new Unit("gobbo",11, 10,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 1
 }
 
 function spawnLevel2Enemies(){
-  enemyUnits.push(new Unit("gobbo",11, 20,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+  enemyUnits.push(new Unit("gobbo",16, 16,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+new Unit("general Gob",15, 15,new createjs.Sprite(genGob, 'run'),15, 10, 16, 10, 10, 10,[3,5], 2, [1, 1], 1, 1),
+new Unit("gobbo",16, 14,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+new Unit("gobbo",14, 14,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+new Unit("gobbo",14, 16,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
 );
 }
+
+function spawnLevel3Enemies(){
+  enemyUnits.push(new Unit("Litch",16, 16,new createjs.Sprite(genGob, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+  );
+}
+
+const levelSpawnFunctions = [spawnLevel1Enemies, spawnLevel2Enemies, spawnLevel3Enemies];
