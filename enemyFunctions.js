@@ -36,6 +36,7 @@ function enemyMove(enemy, targetPosition) {
 
   // Only move the enemy if the target position is not occupied
   if (!isOccupied&& !isOccupiedByFriendly && !isObstacle) {
+    gridArray[enemy.row][enemy.col] = 0;
     enemy.col = targetPosition.col;
     enemy.row = targetPosition.row;
     enemy.scol = enemy.col;
