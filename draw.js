@@ -26,7 +26,8 @@ let currentFrameIndex = 0;
 
 // Create a square shape for the grid
 function drawGrid() {
-  const background = new createjs.Bitmap("images/background1.png");
+  const backgrounds = [new createjs.Bitmap("images/background1.png"), new createjs.Bitmap("images/forrest_background.png"), new createjs.Bitmap("images/throne_background.png")]
+  const background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
 background.scaleX = canvas.width / background.image.width;
 background.scaleY = canvas.height / background.image.height;
 stage.addChildAt(background, 0);
