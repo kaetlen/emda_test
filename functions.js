@@ -111,13 +111,13 @@ function newLevel(){
     set_background=0
   }
   background = backgrounds[set_background]
-  for (let i = 0; i < friendlyUnits; i++) {
+  for (let i = 0; i < friendlyUnits.length; i++) {
     friendlyUnits[i].col = i;
-   friendlyUnits[i].row = 0;
-   friendlyUnits[i].scol = i;
-    friendlyUnits[i].srow = 0;
-   gridArray[0][i] = 1;
-   friendlyUnits[i].actions = friendlyUnits[i].maxActions;
+    friendlyUnits[i].row = 24;
+    friendlyUnits[i].scol = i;
+    friendlyUnits[i].srow = 24;
+    gridArray[0][i] = 1;
+    friendlyUnits[i].actions = friendlyUnits[i].maxActions;
     friendlyUnits[i].movement = friendlyUnits[i].maxMovement;
     
   }
