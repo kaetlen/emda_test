@@ -3,7 +3,16 @@
   function attack(attacker,defender){
     console.log("attacking", defender);
     attacker.actions--;
-    defender.health -= randomInt(attacker.attack[0], attacker.attack[1]);
+if(randomInt(1,100)+attacker.accuracy>=10+defender.doge){
+  const damage = Math.max( (attacker.attack+randomInt(attacker.weponDamage[0],attacker.weponDamage[1]))-defender.defense,1);
+    defender.health -= damage;
+   console.log("target hit for ", damage, " damage");
+   console.log("target health", defender.health);
+}
+else{
+  console.log("missed");
+
+}
     attacker.movement -= Math.floor(Math.sqrt(Math.pow(attacker.scol - attacker.col, 2) + Math.pow(attacker.srow - attacker.row, 2)));
     gridArray[attacker.srow][attacker.scol] = 0;
     attacker.scol = attacker.col;
@@ -14,7 +23,7 @@
     else {
       gridArray[attacker.row][attacker.col] = 2;
     }
-    console.log("target health", defender.health);
+   
     console.log("attacker actions at", attacker.actions);}
 
 function distanceBetween(col1, row1, col2, row2) {
@@ -57,6 +66,9 @@ friendlyUnits.forEach(unit => {
   unit.bonusActions = unit.maxBonusActions;
 });
 
+
+
+
 enemyUnits.forEach(unit => {
   gridArray[unit.srow][unit.scol] = 0;
   unit.scol = unit.col;
@@ -91,6 +103,27 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
 }
 }
 
+
+function newLevel(){
+  set_background++
+  if (set_background>=backgrounds.length){
+    set_background=0
+  }
+  background = backgrounds[set_background]
+  for (let i = 0; i < friendlyUnits; i++) {
+    friendlyUnits[i].col = i;
+   friendlyUnits[i].row = 0;
+   friendlyUnits[i].scol = i;
+    friendlyUnits[i].srow = 0;
+   gridArray[0][i] = 1;
+   friendlyUnits[i].actions = friendlyUnits[i].maxActions;
+    friendlyUnits[i].movement = friendlyUnits[i].maxMovement;
+    
+  }
+  turn = 'friendly';
+}
+
+
 function checkDeath(){
 friendlyUnits.forEach(unit => {
 if (unit.health <= 0) {
@@ -118,6 +151,7 @@ enemyUnits.splice(enemyUnits.indexOf(unit), 1);
 }
 
 
+
 function isValidStep(unit, step) {
   // Check if the step is within the grid
   if (step.col < 0 || step.row < 0 || step.col >= GRID_WIDTH || step.row >= GRID_HEIGHT) {
@@ -139,54 +173,7 @@ function isValidStep(unit, step) {
 }
 
 
-function enemyTurn() {
-  enemyUnits.forEach(enemy => {
-    const target = friendlyUnits.reduce((nearest, unit) => {
-      const distance = Math.abs(unit.col - enemy.col) + Math.abs(unit.row - enemy.row);
-      return (!nearest || distance < nearest.distance) ? { unit, distance } : nearest;
-    }, null);
 
-    if (target) {
-      if (target.distance >= enemy.range[0] && target.distance <= enemy.range[1] && enemy.actions > 0) {
-        attack(enemy, target.unit);
-      } else if (enemy.movement > 0) {
-        const path = findPath(enemy.col, enemy.row, target.unit.col, target.unit.row, enemy.movement*3);
-        console.log(path)
-        if (path) {
-          let steps = Math.min(enemy.movement, path.length - 1);
-          for (let i = 1; i <Math.min(enemy.movement, path.length); i++) {
-            if (Math.abs(target.unit.col - enemy.col) + Math.abs(target.unit.row - enemy.row) >= enemy.range[0] && Math.abs(target.unit.col - enemy.col) + Math.abs(target.unit.row - enemy.row) <= enemy.range[1] && enemy.actions > 0) {
-              attack(enemy, target.unit);
-              break;
-            }
-            const step = path[i];
-            if (gridArray[step.row][step.col] === 0) {
-              gridArray[enemy.row][enemy.col] = 0;
-              enemy.col = step.col;
-              enemy.row = step.row;
-              enemy.movement-=.5;
-              enemy.scol = enemy.col;
-              enemy.srow = enemy.row;
-              gridArray[enemy.srow][enemy.scol] = 2;
-            } else {
-              if (Math.abs(target.unit.col - enemy.col) + Math.abs(target.unit.row - enemy.row) >= enemy.range[0] && Math.abs(target.unit.col - enemy.col) + Math.abs(target.unit.row - enemy.row) <= enemy.range[1] && enemy.actions > 0) {
-              attack(enemy, target.unit);
-              break;
-            }
-              break;
-            }
-          }
-          if (Math.abs(target.unit.col - enemy.col) + Math.abs(target.unit.row - enemy.row) >= enemy.range[0] && Math.abs(target.unit.col - enemy.col) + Math.abs(target.unit.row - enemy.row) <= enemy.range[1] && enemy.actions > 0) {
-              attack(enemy, target.unit);
-             
-            }
-        }
-      }
-    }
-  });
-
-  endTurn();
-}
 
 
 

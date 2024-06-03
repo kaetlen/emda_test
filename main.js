@@ -7,19 +7,26 @@
 function init() {
   
 
-  gridArray[5][10] = 3;
- gridArray[5][11] = 3;
- gridArray[5][12] = 3;
+  
 
+///////////////////////////////////////// strength, dextarity, constitution, inteligence, wisdom, carisma,weponDamage defense, range = [1, 1], maxActions, maxBonusActions
+friendlyUnits = [new Unit("archer",3, 0,new createjs.Sprite(archerSpriteSheet, 'run'),10, 18, 12, 8, 8, 10,[1,4], 0, [1.1, 4], 1, 1),
+new Unit("knight",4, 1,new createjs.Sprite(knightSpriteSheet, 'run'),18, 10, 16, 8, 8, 8,[2,6], 4, [1, 1], 1, 1),
+new Unit("rouge",0, 2,new createjs.Sprite(rougeSpriteSheet, 'run'),10, 20, 10, 8, 8, 10,[1,4], 0, [1, 1], 1, 1),
+new Unit("mage",1, 1,new createjs.Sprite(gobSpriteSheet, 'run'),8, 10, 10, 18, 8, 10,[1,4], 0, [1, 1], 1, 1),
+];
 
- friendlyUnits = [new Unit("archer",10, 5,new createjs.Sprite(archerSpriteSheet, 'run')), new Unit("knight",0, 0,new createjs.Sprite(knightSpriteSheet, 'run'))];
-enemyUnits = [new Unit("gobbo",10, 10,new createjs.Sprite(gobSpriteSheet, 'run'))];
+enemyUnits = [new Unit("gobbo",11, 20,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+new Unit("gobbo",8, 17,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+new Unit("gobbo",11, 10,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+
+];
 
  
 
  // Initial grid drawing
  drawGrid();
-
+ addGridNumbers(); 
  
 
  drawUnits();
@@ -42,6 +49,7 @@ enemyUnits = [new Unit("gobbo",10, 10,new createjs.Sprite(gobSpriteSheet, 'run')
    }
    else if (selected && event.key === "w") {
      moveToPoint(selected.col * GRID_SIZE, (selected.row - 1) * GRID_SIZE, selected);
+     newLevel();
    }
    else if (selected && event.key === "a") {
      moveToPoint((selected.col - 1) * GRID_SIZE, selected.row * GRID_SIZE, selected);
@@ -94,12 +102,19 @@ if (selected != null) {
   
    if (selected != undefined) {
      console.log("selected is ", selected);
-     if (target != undefined && distance <= selected.range[1] && distance >= selected.range[0] && selected.actions > 0) {
+     if (target != undefined && distance <= selected.range[1] && distance >= selected.range[0] && selected.actions > 0 && isObstacleBetween(selected.col, selected.row, target.col, target.row) === false) {
      
        
        attack(selected,target);
 
      }
+   }
+   if (oldSelected != selected) {
+    if(oldSelected != null){
+    oldSelected.col = oldSelected.scol;
+    oldSelected.row = oldSelected.srow;
+    }
+     oldSelected = selected;
    }
   }
  });

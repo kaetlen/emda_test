@@ -35,9 +35,22 @@ archerImage.src = archerSpriteSheetURL;
 archerImage.crossOrigin = true;
 
 
-  // kight sprite sheet
+  // archer sprite sheet
   const archerSpriteSheet = new createjs.SpriteSheet({
     images: [archerImage],  // Correct image variable for the goblin sprite sheet
     frames: { width: 36, height: SPRITE_HEIGHT },
     animations: { run: [0, 0] } // Assuming 'run' animation for goblin sprite is only frame 0
   });
+
+
+// rouge sprite sheet setup
+  const rougeSpriteSheetURL = 'images/rougeHero.png';
+const rougeImage = new Image();
+rougeImage.src = rougeSpriteSheetURL;
+rougeImage.crossOrigin = true;
+// rouge sprite sheet
+const rougeSpriteSheet = new createjs.SpriteSheet({
+  images: [rougeImage],  // Correct image variable for the goblin sprite sheet
+  frames: { width: 38, height: SPRITE_HEIGHT },
+  animations: { run: [0, 0] } // Assuming 'run' animation for goblin sprite is only frame 0
+});
