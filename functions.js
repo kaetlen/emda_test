@@ -122,6 +122,8 @@ function newLevel(){
       friendlyUnits[i].health = friendlyUnits[i].maxHealth;
       friendlyDeadUnits.splice(friendlyDeadUnits.indexOf(friendlyUnits[i]), 1);
     }
+    friendlyUnits[i].health = friendlyUnits[i].maxHealth;
+
     friendlyUnits[i].col = i;
     friendlyUnits[i].row = 24;
     friendlyUnits[i].scol = i;

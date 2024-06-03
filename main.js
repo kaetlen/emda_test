@@ -123,16 +123,20 @@ if (selected != null) {
   
    checkDeath();
 
-   draw();
+   if (enemyUnits.length === 0) {
+    
+     newLevel();
+   }
    // Clear the stage and redraw the grid to show updated starting positions
  
+   
   
    
  
 
   
    
-
+   draw();
  });
 }
 

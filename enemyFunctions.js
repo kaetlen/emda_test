@@ -21,13 +21,26 @@ function findattackPosition(unit,target,minRange,maxRange){
 }
 
 
-function enemyMove(enemy, position){
-  gridArray[enemy.row][enemy.col] = 0;
-  enemy.col = position.col;
-  enemy.row = position.row;
-  enemy.scol = enemy.col;
+
+
+function enemyMove(enemy, targetPosition) {
+  // Check if the target position is occupied by another enemy
+  const isOccupied = enemyUnits.some(otherEnemy => 
+    otherEnemy.col === targetPosition.col && otherEnemy.row === targetPosition.row 
+  );
+  const isOccupiedByFriendly = friendlyUnits.some(friendly =>
+    friendly.col === targetPosition.col && friendly.row === targetPosition.row
+  );
+
+  const isObstacle = gridArray[targetPosition.row][targetPosition.col] !== 0;
+
+  // Only move the enemy if the target position is not occupied
+  if (!isOccupied&& !isOccupiedByFriendly && !isObstacle) {
+    enemy.col = targetPosition.col;
+    enemy.row = targetPosition.row;
+    enemy.scol = enemy.col;
   enemy.srow = enemy.row;
-  
+  }
 }
 
 function inRange(unit, target) {
@@ -92,7 +105,7 @@ new Unit("gobbo",11, 10,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 1
 
 function spawnLevel2Enemies(){
   enemyUnits.push(new Unit("gobbo",16, 16,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
-new Unit("general Gob",15, 15,new createjs.Sprite(genGob, 'run'),15, 10, 16, 10, 10, 10,[3,5], 2, [1, 1], 1, 1),
+new Unit("general Gob",15, 15,new createjs.Sprite(genGobSpriteSheet, 'run'),15, 10, 16, 10, 10, 10,[3,5], 2, [1, 1], 1, 1),
 new Unit("gobbo",16, 14,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
 new Unit("gobbo",14, 14,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
 new Unit("gobbo",14, 16,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
@@ -100,7 +113,7 @@ new Unit("gobbo",14, 16,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 1
 }
 
 function spawnLevel3Enemies(){
-  enemyUnits.push(new Unit("Litch",16, 16,new createjs.Sprite(genGob, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+  enemyUnits.push(new Unit("Litch",16, 16,new createjs.Sprite(genGobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
   );
 }
 

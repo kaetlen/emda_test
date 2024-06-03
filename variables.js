@@ -101,8 +101,8 @@ let turn = 'friendly';
 const GRID_SIZE = 64;
 const SPRITE_WIDTH = 64;
 const SPRITE_HEIGHT = 64;
-const GRID_WIDTH = 64
-const GRID_HEIGHT = 64
+const GRID_WIDTH = 25
+const GRID_HEIGHT = 25
  // Define the unit class
   class Unit {
     constructor(name, row, col,sprite=new createjs.Sprite(spriteSheet, 'run'),strength=10, dextarity=10, constitution=10, inteligence=10, wisdom=10, carisma=10, weponDamage=[1,1], defense = 0, range = [1, 1], maxActions = 1, maxBonusActions = 1) {
