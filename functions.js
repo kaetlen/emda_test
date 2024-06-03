@@ -125,7 +125,7 @@ function newLevel(){
     friendlyUnits[i].row = 24;
     friendlyUnits[i].scol = i;
     friendlyUnits[i].srow = 24;
-    gridArray[0][i] = 1;
+    gridArray[24][i] = 1;
     friendlyUnits[i].actions = friendlyUnits[i].maxActions;
     friendlyUnits[i].movement = friendlyUnits[i].maxMovement;
     
@@ -135,7 +135,7 @@ function newLevel(){
     gridArray[enemyUnits[i].srow][enemyUnits[i].scol] = 0;
     enemyUnits[i].health=0
   }
-  
+
   background = backgrounds[set_background]
   gridArray= gridArrays[set_background];
   turn = 'friendly';
