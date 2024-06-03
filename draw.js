@@ -14,6 +14,7 @@ image.crossOrigin = true;
 const spriteSheet = new createjs.SpriteSheet({
   images: [image],
   frames: { width: SPRITE_WIDTH, height: SPRITE_HEIGHT },
+
   animations: { run: [0, 3] }
 });
 
@@ -22,12 +23,13 @@ let currentFrameIndex = 0;
 
 
 
-
+const backgrounds = [new createjs.Bitmap("images/background1.png"), new createjs.Bitmap("images/forrest_background.png"), new createjs.Bitmap("images/throne_background.png")]
+var set_background=0
+const background = backgrounds[set_background]
 
 // Create a square shape for the grid
 function drawGrid() {
-  const backgrounds = [new createjs.Bitmap("images/background1.png"), new createjs.Bitmap("images/forrest_background.png"), new createjs.Bitmap("images/throne_background.png")]
-  const background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+ 
 background.scaleX = canvas.width / background.image.width;
 background.scaleY = canvas.height / background.image.height;
 stage.addChildAt(background, 0);

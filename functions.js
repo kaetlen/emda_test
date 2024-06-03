@@ -66,6 +66,9 @@ friendlyUnits.forEach(unit => {
   unit.bonusActions = unit.maxBonusActions;
 });
 
+
+
+
 enemyUnits.forEach(unit => {
   gridArray[unit.srow][unit.scol] = 0;
   unit.scol = unit.col;
@@ -99,6 +102,13 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
   //unit.frame = ( unit.frame + 1) % spriteSheet.getNumFrames();
 }
 }
+
+
+function newLevel(){
+  set_background++
+  background = backgrounds
+}
+
 
 function checkDeath(){
 friendlyUnits.forEach(unit => {
