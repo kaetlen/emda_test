@@ -25,7 +25,9 @@ let currentFrameIndex = 0;
 
 const backgrounds = [new createjs.Bitmap("images/background1.png"), new createjs.Bitmap("images/forrest_background.png"), new createjs.Bitmap("images/throne_background.png")]
 var set_background=0
-const background = backgrounds[set_background]
+
+var background = backgrounds[set_background]
+
 
 // Create a square shape for the grid
 function drawGrid() {
