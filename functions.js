@@ -5,7 +5,7 @@ function playSound(filePath) {
   
   function attack(attacker,defender){
     console.log("attacking", defender);
-    playSound("sounds/attack.wav");
+    playSound("sounds/Attack.wav");
     attacker.actions--;
 if(randomInt(1,100)+attacker.accuracy>=10+defender.doge){
   const damage = Math.max( (attacker.attack+randomInt(attacker.weponDamage[0],attacker.weponDamage[1]))-defender.defense,1);
