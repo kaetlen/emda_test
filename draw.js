@@ -80,7 +80,7 @@ square.alpha = .4;
     }
       
     
-       else if (isObstacle) {
+        if (isObstacle) {
       square.graphics.beginFill("gray").drawRect(0, 0, GRID_SIZE, GRID_SIZE);
      
     }

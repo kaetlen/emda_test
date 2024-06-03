@@ -109,8 +109,10 @@ function newLevel(){
 
   if (set_background>=backgrounds.length){
     set_background=0
+    alert('You Win');
   }
   background = backgrounds[set_background]
+  gridArray= gridArrays[set_background];
   for (let i = 0; i < friendlyUnits.length; i++) {
     friendlyUnits[i].col = i;
     friendlyUnits[i].row = 24;
