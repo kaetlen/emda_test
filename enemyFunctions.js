@@ -77,3 +77,8 @@ new Unit("gobbo",8, 17,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10
 new Unit("gobbo",11, 10,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
 );
 }
+
+function spawnLevel2Enemies(){
+  enemyUnits.push(new Unit("gobbo",11, 20,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
+);
+}
