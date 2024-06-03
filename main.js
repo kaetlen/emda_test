@@ -47,7 +47,7 @@ spawnLevel1Enemies();
    }
    else if (selected && event.key === "w") {
      moveToPoint(selected.col * GRID_SIZE, (selected.row - 1) * GRID_SIZE, selected);
-     newLevel();
+     
    }
    else if (selected && event.key === "a") {
      moveToPoint((selected.col - 1) * GRID_SIZE, selected.row * GRID_SIZE, selected);
