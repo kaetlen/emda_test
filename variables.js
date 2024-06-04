@@ -92,7 +92,7 @@ const backgrounds = [new createjs.Bitmap("images/background1.png"), new createjs
 
 var background = backgrounds[set_background]
 
-const levelsongs = ["Lvl_1_2_Music.wav", "Lvl_1_2_Music.wav", "BOSS_MUSIC.wav"]
+const levelsongs = ["sounds/Lvl_1_2_Music.wav", "sounds/Lvl_1_2_Music.wav", "sounds/BOSS_MUSIC.wav"]
 var levelSong = levelsongs[set_background]
 
 let turn = 'friendly';
