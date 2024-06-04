@@ -5,7 +5,8 @@
 
 // Initialization function
 function init() {
-  
+  levelSong.loop=true
+  levelSong.play();
 
   
 
@@ -33,12 +34,7 @@ function init() {
   
    // Add event listener for the Enter key to end the turn
    document.addEventListener("keydown", event => {
-    if (firstClick === false) {
-      levelSong.loop = true;
-      levelSong.play();
-      //playSoundLoop(levelSong);
-      firstClick = true;
-    }
+    
      if (event.key === "Enter" && turn === 'friendly') {
        endTurn();
       
@@ -68,12 +64,7 @@ function init() {
   
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
-    if (firstClick === false) {
-      levelSong.loop = true;
-      levelSong.play();
-      //playSoundLoop(levelSong);
-      firstClick = true;
-    }
+   
   
      const rect = canvas.getBoundingClientRect();
      const mouseX = event.clientX - rect.left;
@@ -132,6 +123,7 @@ function init() {
    // Update the stage on each tick
    createjs.Ticker.on("tick", () => {
     
+      
   
      checkDeath();
   
@@ -156,7 +148,35 @@ function init() {
     
      
      draw();
+   
    });
   }
   
-  init(); // Call the initialization function
+   if(!firstClick){
+    const startScreen = new createjs.Shape();
+    startScreen.graphics.beginFill("blue").drawRect(0, 0, canvas.width, canvas.height);
+    const startText = new createjs.Text("Click to Start", "30px Arial", "black");
+    startText.textBaseline = "middle";
+    startText.textAlign = "center";
+    startText.x = canvas.width / 2;
+    startText.y = canvas.height / 2;
+    stage.addChild(startScreen);
+    stage.addChild(startText);
+    stage.update();
+
+    canvas.addEventListener("click", handleStartClick);
+     canvas.addEventListener("keydown",handleStartClick);
+    
+    function handleStartClick() {
+      firstClick=true
+      canvas.removeEventListener("click", handleStartClick);
+      canvas.removeEventListener("keydown", handleStartClick);
+       stage.removeChild(startScreen);
+      stage.removeChild(startText);
+     
+      // Add your code to start the game here
+       init(); // Call the initialization function
+    }
+  }
+ 
+  

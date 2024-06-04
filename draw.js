@@ -176,6 +176,6 @@ function draw() {
   drawGrid();
   drawPath();
   drawUnits();
-  
+ 
   stage.update();
 }
