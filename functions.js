@@ -1,21 +1,8 @@
-function playSound(filePath) {
-  let audio = new Audio(filePath);
-  audio.play();
-}
-function playSoundLoop(filePath) {
-  let audio = new Audio(filePath);
-  audio.loop = true;
-  audio.play();
-}
-function stopSoundLoop(filePath) {
-  let audio = new Audio(filePath);
-  audio.loop = true;
-  audio.pause();
-}
+
   
   function attack(attacker,defender){
     console.log("attacking", defender);
-    playSound("sounds/Attack.wav");
+    attack_sound.play();
     attacker.actions--;
 if(randomInt(1,100)+attacker.accuracy>=10+defender.doge){
   const damage = Math.max( (attacker.attack+randomInt(attacker.weponDamage[0],attacker.weponDamage[1]))-defender.defense,1);
@@ -188,7 +175,7 @@ function checkDeath() {
 
       gridArray[unit.row][unit.col] = 0;
       console.log(unit, "is dead");
-      playSound("sounds/Enemy_Death.wav");
+      enemy_death_sound.play();
       enemyUnits.splice(enemyUnits.indexOf(unit), 1);
     }
   });

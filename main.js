@@ -34,7 +34,9 @@ function init() {
    // Add event listener for the Enter key to end the turn
    document.addEventListener("keydown", event => {
     if (firstClick === false) {
-      playSoundLoop(levelSong);
+      levelSong.loop = true;
+      levelSong.play();
+      //playSoundLoop(levelSong);
       firstClick = true;
     }
      if (event.key === "Enter" && turn === 'friendly') {
@@ -67,7 +69,9 @@ function init() {
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
     if (firstClick === false) {
-      playSoundLoop(levelSong);
+      levelSong.loop = true;
+      levelSong.play();
+      //playSoundLoop(levelSong);
       firstClick = true;
     }
   

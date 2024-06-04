@@ -92,8 +92,22 @@ const backgrounds = [new createjs.Bitmap("images/background1.png"), new createjs
 
 var background = backgrounds[set_background]
 
-const levelsongs = ["sounds/Lvl_1_2_Music.wav", "sounds/Lvl_1_2_Music.wav", "sounds/BOSS_MUSIC.wav"]
+const levelsongs = [Lvl_1_2_Music,Lvl_1_2_Music,boss_music]
 var levelSong = levelsongs[set_background]
+
+var attack_sound = new Audio("sounds/Attack.wav");
+var boss_music = new Audio("sounds/BOSS_MUSIC.wav");
+var enemy_death_sound = new Audio("sounds/Enemy_Death.wav");
+var foot_steps_sound = new Audio("sounds/foot_Steps.wav");
+var game_over_sound = new Audio("sounds/GAME_OVER.wav");
+var Lvl_1_2_Music = new Audio("sounds/Lvl_1_2_Music.wav");
+var magic_heal_sound = new Audio("sounds/Magic_Healing.wav");
+var title_screen_music = new Audio("sounds/titleScreen.wav");
+
+
+
+var loopedAudio;
+
 let firstClick = false;
 
 let turn = 'friendly';
