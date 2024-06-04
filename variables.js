@@ -94,6 +94,7 @@ var background = backgrounds[set_background]
 
 const levelsongs = ["sounds/Lvl_1_2_Music.wav", "sounds/Lvl_1_2_Music.wav", "sounds/BOSS_MUSIC.wav"]
 var levelSong = levelsongs[set_background]
+let firstClick = false;
 
 let turn = 'friendly';
   let selected = null;
