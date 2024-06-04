@@ -59,11 +59,13 @@ function enemyTurn() {
       if (friendly.health <= 0) {
         return;
       }
+      else{
       const distance = Math.sqrt(Math.pow(friendly.col - enemy.col, 2) + Math.pow(friendly.row - enemy.row, 2));
       if (distance < minDistance) {
         target = friendly;
         minDistance = distance;
       }
+    }
     });
     if (target && inRange(enemy, target) && enemy.actions > 0) {
       attack(enemy, target);

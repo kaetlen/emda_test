@@ -139,10 +139,10 @@ function init() {
   
        newLevel();
      }
-     if(friendlyUnits.length === 0){
+     if(friendlyUnits.length === friendlyDeadUnits.length){
       levelSong.pause();
       game_over_sound.play();
-      game_over_sound.loop = true;
+      
         alert("Game Over");
 
      }
