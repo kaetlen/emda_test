@@ -2,6 +2,16 @@ function playSound(filePath) {
   let audio = new Audio(filePath);
   audio.play();
 }
+function playSoundLoop(filePath) {
+  let audio = new Audio(filePath);
+  audio.loop = true;
+  audio.play();
+}
+function stopSoundLoop(filePath) {
+  let audio = new Audio(filePath);
+  audio.loop = true;
+  audio.pause();
+}
   
   function attack(attacker,defender){
     console.log("attacking", defender);
@@ -109,6 +119,7 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
 
 
 function newLevel(){
+  stopSoundLoop(levelSong);
   set_background++
 
   if (set_background>=backgrounds.length){
@@ -146,7 +157,8 @@ function newLevel(){
   background = backgrounds[set_background]
   gridArray= gridArrays[set_background];
   levelSong = levelsongs[set_background]
-  
+  playSoundLoop(levelSong);
+
   levelSpawnFunctions[set_background]();
   turn = 'friendly';
 

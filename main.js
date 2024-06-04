@@ -120,7 +120,7 @@ if (selected != null) {
 
  // Update the stage on each tick
  createjs.Ticker.on("tick", () => {
-  playSound(levelSong);
+  
 
    checkDeath();
 
