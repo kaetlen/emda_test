@@ -49,7 +49,7 @@ function init() {
      }
      else if (selected && event.key === "w") {
        moveToPoint(selected.col * GRID_SIZE, (selected.row - 1) * GRID_SIZE, selected);
-       newLevel();
+      
      }
      else if (selected && event.key === "a") {
        moveToPoint((selected.col - 1) * GRID_SIZE, selected.row * GRID_SIZE, selected);
@@ -95,20 +95,19 @@ function init() {
        selected = units.find(unit => unit.col === gridPosition[0] && unit.row === gridPosition[1]);
      }
     
-  if (selected != null && selected.heath>0) {
-       distance = Math.sqrt(Math.pow(gridPosition[0] - selected.col, 2) + Math.pow(gridPosition[1] - selected.row, 2));
-     }
+
     
     
-     if (selected != undefined) {
+     if (selected != undefined && selected.health>0) {
        console.log("selected is ", selected);
+         distance = Math.sqrt(Math.pow(gridPosition[0] - selected.col, 2) + Math.pow(gridPosition[1] - selected.row, 2));
+
        if (target != undefined && distance <= selected.range[1] && distance >= selected.range[0] && selected.actions > 0 && isObstacleBetween(selected.col, selected.row, target.col, target.row) === false) {
-       
-         
-         attack(selected,target);
-  
-       }
+        attack(selected,target);
+      }
      }
+    else{selected=undefined}
+    
      if (oldSelected != selected) {
       if(oldSelected != null){
       oldSelected.col = oldSelected.scol;
