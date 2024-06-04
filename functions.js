@@ -55,6 +55,7 @@ return Math.floor(Math.random() * (max - min + 1)) + min;
 
 // Function to end the turn
 function endTurn() {
+console.log("ending turn");
 selected = undefined
 // Update the player's actual position to the intended position at the end of the turn
 friendlyUnits.forEach(unit => {
@@ -106,7 +107,8 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
 
 
 function newLevel(){
-  stopSoundLoop(levelSong);
+  levelSong.pause();
+  levelSong.currentTime = 0;
   set_background++
 
   if (set_background>=backgrounds.length){
@@ -144,7 +146,9 @@ function newLevel(){
   background = backgrounds[set_background]
   gridArray= gridArrays[set_background];
   levelSong = levelsongs[set_background]
-  playSoundLoop(levelSong);
+
+  levelSong.loop = true;
+  levelSong.play();
 
   levelSpawnFunctions[set_background]();
   turn = 'friendly';

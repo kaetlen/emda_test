@@ -92,8 +92,6 @@ const backgrounds = [new createjs.Bitmap("images/background1.png"), new createjs
 
 var background = backgrounds[set_background]
 
-const levelsongs = [Lvl_1_2_Music,Lvl_1_2_Music,boss_music]
-var levelSong = levelsongs[set_background]
 
 var attack_sound = new Audio("sounds/Attack.wav");
 var boss_music = new Audio("sounds/BOSS_MUSIC.wav");
@@ -103,6 +101,12 @@ var game_over_sound = new Audio("sounds/GAME_OVER.wav");
 var Lvl_1_2_Music = new Audio("sounds/Lvl_1_2_Music.wav");
 var magic_heal_sound = new Audio("sounds/Magic_Healing.wav");
 var title_screen_music = new Audio("sounds/titleScreen.wav");
+
+
+const levelsongs = [Lvl_1_2_Music,Lvl_1_2_Music,boss_music]
+var levelSong = levelsongs[set_background]
+
+
 
 
 
