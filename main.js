@@ -104,7 +104,7 @@ function init() {
        selected = units.find(unit => unit.col === gridPosition[0] && unit.row === gridPosition[1]);
      }
     
-  if (selected != null) {
+  if (selected != null && selected.heath>0) {
        distance = Math.sqrt(Math.pow(gridPosition[0] - selected.col, 2) + Math.pow(gridPosition[1] - selected.row, 2));
      }
     
@@ -138,6 +138,13 @@ function init() {
      if (enemyUnits.length === 0) {
   
        newLevel();
+     }
+     if(friendlyUnits.length === 0){
+      levelSong.pause();
+      game_over_sound.play();
+      game_over_sound.loop = true;
+        alert("Game Over");
+
      }
      // Clear the stage and redraw the grid to show updated starting positions
    
