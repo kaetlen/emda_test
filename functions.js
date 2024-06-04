@@ -145,6 +145,8 @@ function newLevel(){
 
   background = backgrounds[set_background]
   gridArray= gridArrays[set_background];
+  levelSong = levelsongs[set_background]
+  
   levelSpawnFunctions[set_background]();
   turn = 'friendly';
 
@@ -162,6 +164,7 @@ function checkDeath() {
 
       gridArray[unit.row][unit.col] = 0;
       console.log(unit, "is dead");
+      
     }
   });
 
@@ -173,6 +176,7 @@ function checkDeath() {
 
       gridArray[unit.row][unit.col] = 0;
       console.log(unit, "is dead");
+      playSound("sounds/Enemy_Death.wav");
       enemyUnits.splice(enemyUnits.indexOf(unit), 1);
     }
   });
