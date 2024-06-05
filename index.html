@@ -6,12 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>EMDA203-Empty-Project</title>
     <link rel="stylesheet" href="/style.css" />
+  <style>
+    body {
+      height: 2000px; /* Make the page scrollable */
+    }
+    #fixedShape {
+      position: fixed;
+      top: 550px;
+      left: 20px;
+      width: 200px;
+      height: 150px;
+      background-color: red;
+      z-index: 10;
+    }
+    #fixedShape2 {
+      position: fixed;
+      top: 550px;
+      left: 1050px;
+      width: 200px;
+      height: 150px;
+      background-color: red;
+      z-index: 10;
+    }
+  </style>
 </head>
 
 <body>
    
     <canvas id="myCanvas" width="1600" height="1600"></canvas>
- 
+ <div id="fixedShape"></div>
+  <div id="fixedShape2"></div>
      <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
     <script src="js/keyMonkeyEvolved.js"></script>
    <script src="variables.js"></script>

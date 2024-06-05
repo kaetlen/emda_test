@@ -171,11 +171,39 @@ if (selected) {
 }
 }
 
+function show_stats(){
+  if(selected){
+    selected_stat_block.style.display= 'block';
+ let text1 = document.createElement('div');
+        text1.innerText =selected.name+"\n health: "+  selected.health+"\n movement: "+ selected.movement+ "\n range: "+Math.ceil(selected.range[0])+'-'+Math.floor(selected.range[1])+ "\n defence: "+ selected.defense+"\n actions: "+ selected.actions
+selected_stat_block.innerHTML = '';
+        selected_stat_block.appendChild(text1);
+
+    
+  }
+  else{ selected_stat_block.style.display= 'none';
+ selected_stat_block.innerHTML = '';
+}
+  
+if(target){
+  target_stat_block.style.display= 'block';
+  let text2 = document.createElement('div');
+  text2.innerText = target.health
+  target_stat_block.innerHTML = '';
+   target_stat_block.appendChild(text2)
+}
+else{
+  target_stat_block.style.display= 'none';}
+}
+
 function draw() {
   stage.removeAllChildren();
   drawGrid();
   drawPath();
   drawUnits();
- 
+
+ show_stats()
+  
+
   stage.update();
 }
