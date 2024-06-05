@@ -156,18 +156,18 @@ function init() {
    if(!firstClick){
     const titleScreen = new createjs.Bitmap('images/title.png');
 
-    //const startScreen = new createjs.Shape();
-   // startScreen.graphics.beginFill("blue").drawRect(0, 0, canvas.width, canvas.height);
+ 
+    const loadQueue = new createjs.LoadQueue(false);
+loadQueue.addEventListener("fileload", handleFileLoad);
+loadQueue.loadFile({id: "titleScreen", src: "images/title.png"});
 
-    //const startText = new createjs.Text("Tab to end movement, Enter to end turn, Click for anything else \n the enemy square will light up when your selected unit is in range, simply click on that enemy and you will attack \n you might want the console open to see health and stuff (right click, inspect, console) \n Click to Start ", "30px Arial", "black");
-
-   // startText.textAlign = "center";
-    //startText.x = canvas.width / 2;
-    //startText.y = canvas.height / 2;
-    //stage.addChild(startScreen);
-    //stage.addChild(startText);
+function handleFileLoad(event) {
+  if (event.item.id === "titleScreen") {
+    const titleScreen = new createjs.Bitmap(event.result);
     stage.addChild(titleScreen);
     stage.update();
+  }
+}
 
     canvas.addEventListener("click", handleStartClick);
      canvas.addEventListener("keydown",handleStartClick);

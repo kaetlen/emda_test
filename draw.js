@@ -174,34 +174,41 @@ if (selected) {
 function show_stats(){
   if(selected){
     selected_stat_block.style.display= 'block';
- let text1 = document.createElement('div');
- text1.style.paddingLeft = '10px';
-        text1.innerText =(selected.name+
-        "\n health: "+  selected.health+"/"+selected.maxHealth+ " defence: "+ selected.defense+
-        "\n movement: "+ selected.movement+ "/"+selected.maxMovement+
-        "\n damage: "+(selected.attack+selected.weponDamage[0])+"-"+(selected.attack+selected.weponDamage[1])+" range: "+Math.ceil(selected.range[0])+'-'+Math.floor(selected.range[1])+ 
-        "\n actions: "+ selected.actions);
+  let text1 = document.createElement('div');
+  text1.style.paddingLeft = '10px';
+  text1.style.fontSize = '20px';
+  
+      text1.innerText =("Unit: "+selected.name+
+        "\n Health: "+  selected.health+"/"+selected.maxHealth+ " Defence: "+ selected.defense+
+        "\n Movement: "+ selected.movement+ "/"+selected.maxMovement+
+        "\n Damage: "+(selected.attack+selected.weponDamage[0])+"-"+(selected.attack+selected.weponDamage[1])+" Range: "+Math.ceil(selected.range[0])+'-'+Math.floor(selected.range[1])+ 
+        "\n Actions: "+ selected.actions);
         
-selected_stat_block.innerHTML = '';
-
-        selected_stat_block.appendChild(text1);
-
-    
+      selected_stat_block.innerHTML = '';
+      selected_stat_block.appendChild(text1);
   }
   else{ selected_stat_block.style.display= 'none';
  selected_stat_block.innerHTML = '';
 }
   
-if(target){
-  target_stat_block.style.display= 'block';
-  let text2 = document.createElement('div');
-  text2.style.paddingLeft = '10px';
-  text2.innerText = target.health
+  if(target){
+    target_stat_block.style.display= 'block';
+    let text2 = document.createElement('div');
+    text2.style.paddingLeft = '10px';
+    text2.style.fontSize = '20px';
+
+      text2.innerText =("Target: "+ target.name+
+        "\n Health: "+ target.health+"/"+target.maxHealth+ " Defence: "+ target.defense+
+        "\n Movement: "+ target.movement+ "/"+target.maxMovement+
+        "\n Damage: "+(target.attack+target.weponDamage[0])+"-"+(target.attack+target.weponDamage[1])+" Range: "+Math.ceil(target.range[0])+'-'+Math.floor(target.range[1])+
+        "\n Actions: "+ target.actions);
+
   target_stat_block.innerHTML = '';
    target_stat_block.appendChild(text2)
 }
 else{
   target_stat_block.style.display= 'none';}
+  target_stat_block.innerHTML = '';
 }
 
 function draw() {
