@@ -65,7 +65,7 @@ function init() {
   
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
-   
+    text_box.style.display = 'none';
   
      const rect = canvas.getBoundingClientRect();
      const mouseX = event.clientX - rect.left;

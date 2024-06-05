@@ -111,6 +111,8 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
 
 
 function newLevel(){
+  var doAction = false;
+  if(!doAction){
   turn = 'enemy'
   levelSong.pause();
   levelSong.currentTime = 0;
@@ -157,10 +159,14 @@ function newLevel(){
 text_box.style.display = 'block';
   text_box.innerHTML = "test";
   text_box.appendChild
-
-  
-  levelSpawnFunctions[set_background]();
+  doAction=true;
+  }
+ 
+    
+    levelSpawnFunctions[set_background]();
   turn = 'friendly';
+ 
+  
 
 }
 
