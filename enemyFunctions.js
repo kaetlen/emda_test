@@ -127,6 +127,6 @@ function spawnLevel3Enemies(){
                   new Unit("gobbo",15, 15,new createjs.Sprite(gobSpriteSheet, 'run'),10, 12, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
                   new Unit("Emage",14, 16,new createjs.Sprite(gobSpriteSheet, 'run'),10, 12, 10, 10, 10, 10,[1,4], 0, [1.1, 4], 1, 1), 
                  );
-
+                }
 
 const levelSpawnFunctions = [spawnLevel1Enemies, spawnLevel2Enemies, spawnLevel3Enemies];
