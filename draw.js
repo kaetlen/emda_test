@@ -177,7 +177,7 @@ function show_stats(){
   let text1 = document.createElement('div');
   text1.style.paddingLeft = '10px';
   text1.style.fontSize = '20px';
-  
+
       text1.innerText =("Unit: "+selected.name+
         "\n Health: "+  selected.health+"/"+selected.maxHealth+ " Defence: "+ selected.defense+
         "\n Movement: "+ selected.movement+ "/"+selected.maxMovement+
@@ -203,12 +203,13 @@ function show_stats(){
         "\n Damage: "+(target.attack+target.weponDamage[0])+"-"+(target.attack+target.weponDamage[1])+" Range: "+Math.ceil(target.range[0])+'-'+Math.floor(target.range[1])+
         "\n Actions: "+ target.actions);
 
-  target_stat_block.innerHTML = '';
+    target_stat_block.innerHTML = '';
    target_stat_block.appendChild(text2)
 }
 else{
-  target_stat_block.style.display= 'none';}
-  target_stat_block.innerHTML = '';
+  target_stat_block.style.display= 'none';
+ target_stat_block.innerHTML = '';
+}
 }
 
 function draw() {

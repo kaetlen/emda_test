@@ -112,7 +112,7 @@ new Unit("gobbo",4, 5,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10,
 function spawnLevel2Enemies(){
 
   enemyUnits.push(new Unit("gobbo",16, 16,new createjs.Sprite(gobSpriteSheet, 'run'),12, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
-new Unit("general Gob",15, 15,new createjs.Sprite(genGobSpriteSheet, 'run'),16, 10, 16, 10, 10, 10,[3,5], 2, [1, 1], 1, 1),
+new Unit("general Gob",15, 15,new createjs.Sprite(genGobSpriteSheet, 'run'),16, 12, 16, 10, 10, 10,[3,5], 2, [1, 1], 1, 1),
 new Unit("gobbo",16, 14,new createjs.Sprite(gobSpriteSheet, 'run'),12, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
 new Unit("gobbo mage",14, 14,new createjs.Sprite(gobboMageSpriteSheet, 'run'),10, 12, 10, 12, 10, 10,[1,4], 0, [1.1, 4], 1, 1),
 new Unit("gobbo mage",14, 16,new createjs.Sprite(gobboMageSpriteSheet, 'run'),10, 12, 10, 12, 10, 10,[1,4], 0, [1.1, 4], 1, 1),
@@ -122,7 +122,7 @@ new Unit("gobbo mage",14, 16,new createjs.Sprite(gobboMageSpriteSheet, 'run'),10
 
 function spawnLevel3Enemies(){
 
-  enemyUnits.push(new Unit("Lich",16, 16,new createjs.Sprite(lichSpriteSheet, 'run'),13, 16, 20, 20, 16, 10,[5,8], 3, [1.1, 5], 2, 1),
+  enemyUnits.push(new Unit("Lich",16, 16,new createjs.Sprite(lichSpriteSheet, 'run'),13, 15, 20, 20, 16, 10,[5,8], 3, [1.1, 5], 2, 1),
                   new Unit("gobbo",15, 17,new createjs.Sprite(gobSpriteSheet, 'run'),12, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
                   new Unit("gobbo",15, 15,new createjs.Sprite(gobSpriteSheet, 'run'),12, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
                   new Unit("gobbo mage",14, 16,new createjs.Sprite(gobboMageSpriteSheet, 'run'),10, 12, 10, 12, 10, 10,[1,4], 0, [1.1, 4], 1, 1), 
