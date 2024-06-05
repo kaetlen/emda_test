@@ -154,7 +154,8 @@ function init() {
   }
   
    if(!firstClick){
-    const titleScreen = new image("images/title.png", 0, 0, canvas.width, canvas.height);
+    const titleScreen = new createjs.Bitmap('images/title.png');
+
     //const startScreen = new createjs.Shape();
    // startScreen.graphics.beginFill("blue").drawRect(0, 0, canvas.width, canvas.height);
 
