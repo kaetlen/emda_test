@@ -2,6 +2,7 @@
   
   function attack(attacker,defender){
     console.log("attacking", defender);
+    attack_sound.play();
     attacker.actions--;
 if(randomInt(1,100)+attacker.accuracy>=10+defender.doge){
   const damage = Math.max( (attacker.attack+randomInt(attacker.weponDamage[0],attacker.weponDamage[1]))-defender.defense,1);
@@ -54,6 +55,7 @@ return Math.floor(Math.random() * (max - min + 1)) + min;
 
 // Function to end the turn
 function endTurn() {
+console.log("ending turn");
 selected = undefined
 // Update the player's actual position to the intended position at the end of the turn
 friendlyUnits.forEach(unit => {
@@ -105,51 +107,82 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
 
 
 function newLevel(){
+  levelSong.pause();
+  levelSong.currentTime = 0;
   set_background++
 
   if (set_background>=backgrounds.length){
     set_background=0
+    alert('You Win');
   }
-  background = backgrounds[set_background]
-  for (let i = 0; i < friendlyUnits; i++) {
+
+  
+
+  for (let i = 0; i < friendlyUnits.length; i++) {
+    gridArray[friendlyUnits[i].srow][friendlyUnits[i].scol] = 0;
+    gridArray[friendlyUnits[i].row][friendlyUnits[i].col] = 0;
+
+    if (friendlyUnits[i].health <= 0) {
+      friendlyUnits[i].health = friendlyUnits[i].maxHealth;
+      friendlyDeadUnits.splice(friendlyDeadUnits.indexOf(friendlyUnits[i]), 1);
+    }
+    friendlyUnits[i].health = friendlyUnits[i].maxHealth;
+
     friendlyUnits[i].col = i;
-   friendlyUnits[i].row = 0;
-   friendlyUnits[i].scol = i;
-    friendlyUnits[i].srow = 0;
-   gridArray[0][i] = 1;
-   friendlyUnits[i].actions = friendlyUnits[i].maxActions;
+    friendlyUnits[i].row = 24;
+    friendlyUnits[i].scol = i;
+    friendlyUnits[i].srow = 24;
+    gridArray[24][i] = 1;
+    friendlyUnits[i].actions = friendlyUnits[i].maxActions;
     friendlyUnits[i].movement = friendlyUnits[i].maxMovement;
     
   }
+
+  for (let i = 0; i < enemyUnits.length; i++) {
+    gridArray[enemyUnits[i].srow][enemyUnits[i].scol] = 0;
+    enemyUnits[i].health=0
+  }
+
+  background = backgrounds[set_background]
+  gridArray= gridArrays[set_background];
+  levelSong = levelsongs[set_background]
+
+  levelSong.loop = true;
+  levelSong.play();
+
+  levelSpawnFunctions[set_background]();
   turn = 'friendly';
 
 }
 
 
-function checkDeath(){
-friendlyUnits.forEach(unit => {
-if (unit.health <= 0) {
+function checkDeath() {
+  
+
+  friendlyUnits.forEach(unit => {
+    if (unit.health <= 0 && !friendlyDeadUnits.includes(unit)) {
+      friendlyDeadUnits.push(unit);
       //unit.sprite.visible = false;
       stage.removeChild(unit.sprite);
 
       gridArray[unit.row][unit.col] = 0;
-      console.log(unit ,"is dead");
- friendlyUnits.splice(friendlyUnits.indexOf(unit), 1);
+      console.log(unit, "is dead");
+      
     }
-});
+  });
 
-  
-enemyUnits.forEach(unit => {
- if (unit.health <= 0) {
+  enemyUnits.forEach(unit => {
+    if (unit.health <= 0 && !enemyDeadUnits.includes(unit)) {
+      enemyDeadUnits.push(unit);
       //unit.sprite.visible = false;
-     // stage.removeChild(unit.sprite)        
+      // stage.removeChild(unit.sprite)        
 
       gridArray[unit.row][unit.col] = 0;
-      console.log(unit ,"is dead");
-enemyUnits.splice(enemyUnits.indexOf(unit), 1);
- }
-});
-  
+      console.log(unit, "is dead");
+      enemy_death_sound.play();
+      enemyUnits.splice(enemyUnits.indexOf(unit), 1);
+    }
+  });
 }
 
 

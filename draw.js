@@ -23,10 +23,7 @@ let currentFrameIndex = 0;
 
 
 
-const backgrounds = [new createjs.Bitmap("images/background1.png"), new createjs.Bitmap("images/forrest_background.png"), new createjs.Bitmap("images/throne_background.png")]
-var set_background=0
 
-var background = backgrounds[set_background]
 
 
 // Create a square shape for the grid
@@ -134,11 +131,13 @@ square.alpha = .4;
 function drawUnits(){
   // Add units to the stage and update gridArray
 friendlyUnits.forEach(unit => {
+  if(unit.health>0){
    unit.sprite.x = unit.col * GRID_SIZE;
     unit.sprite.y = unit.row * GRID_SIZE;
   stage.addChild(unit.sprite);
   gridArray[unit.srow][unit.scol] = 1;
  unit.sprite.gotoAndStop( unit.frame);
+  }
 });
 
 enemyUnits.forEach(unit => {
@@ -172,11 +171,37 @@ if (selected) {
 }
 }
 
+function show_stats(){
+  if(selected){
+    selected_stat_block.style.display= 'block';
+ let text1 = document.createElement('div');
+        text1.innerText =selected.name+"\n health: "+  selected.health+"\n movement: "+ selected.movement+ "\n range: "+Math.ceil(selected.range[0])+'-'+Math.floor(selected.range[1])+ "\n defence: "+ selected.defense+"\n actions: "+ selected.actions
+selected_stat_block.innerHTML = '';
+        selected_stat_block.appendChild(text1);
+
+    
+  }
+  else{ selected_stat_block.style.display= 'none';
+ selected_stat_block.innerHTML = '';
+}
+  
+if(target){
+  target_stat_block.style.display= 'block';
+  let text2 = document.createElement('div');
+  text2.innerText = target.health
+  target_stat_block.innerHTML = '';
+   target_stat_block.appendChild(text2)
+}
+else{
+  target_stat_block.style.display= 'none';}
+}
+
 function draw() {
   stage.removeAllChildren();
   drawGrid();
   drawPath();
   drawUnits();
+ show_stats()
   
   stage.update();
 }
