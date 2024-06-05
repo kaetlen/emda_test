@@ -163,7 +163,7 @@ function newLevel(){
     selected_diolog=0
   }
   diolog = diologs[selected_diolog]
-text_box.style.display = 'block';
+text_box.style.display = 'flex';
   text_box.innerHTML = diolog[currentLine];
   text_box.appendChild
 

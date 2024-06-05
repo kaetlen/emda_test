@@ -5,8 +5,13 @@
 
 // Initialization function
 function init() {
-  text_box.style.display = 'block'
+  text_box.style.display = 'flex'
+  text_box.style.justifyContent = 'center'; // centers text horizontally
+  text_box.style.alignItems = 'center'; // centers text vertically
+
   text_box.innerHTML = diolog[currentLine];
+  text_box.style.fontSize = '20px';
+ 
 
   levelSong.loop=true
   levelSong.play();
@@ -67,11 +72,11 @@ function init() {
   
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
-    if (currentLine>=diolog.length-1 && text_box.style.display === 'block'){
+    if (currentLine>=diolog.length-1 && text_box.style.display === 'flex'){
      
       currentLine=0
     text_box.style.display = 'none';}
-    else if(text_box.style.display === 'block'){
+    else if(text_box.style.display === 'flex'){
       
       currentLine++
       text_box.innerHTML = diolog[currentLine];
