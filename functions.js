@@ -156,9 +156,11 @@ function newLevel(){
 
   levelSong.loop = true;
   levelSong.play();
+
 text_box.style.display = 'block';
-  text_box.innerHTML = "test";
+  text_box.innerHTML = diolog[currentLine];
   text_box.appendChild
+
   doAction=true;
   }
  
