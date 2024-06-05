@@ -91,3 +91,15 @@ const lichSpriteSheet = new createjs.SpriteSheet({
   frames: { width: 55, height: SPRITE_HEIGHT },
   animations: { run: [0, 0] } // Assuming 'run' animation for goblin sprite is only frame 0
 });
+
+// gobbo mage sprite sheet setup
+const gobboMageSpriteSheetURL = 'images/gobMage.png';
+const gobboMageImage = new Image();
+gobboMageImage.src = gobboMageSpriteSheetURL;
+gobboMageImage.crossOrigin = true;
+// gobbo mage sprite sheet
+const gobboMageSpriteSheet = new createjs.SpriteSheet({
+  images: [gobboMageImage],  // Correct image variable for the goblin sprite sheet
+  frames: { width: 55, height: SPRITE_HEIGHT },
+  animations: { run: [0, 0] } // Assuming 'run' animation for goblin sprite is only frame 0
+});

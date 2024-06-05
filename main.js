@@ -154,16 +154,18 @@ function init() {
   }
   
    if(!firstClick){
-    const startScreen = new createjs.Shape();
-    startScreen.graphics.beginFill("blue").drawRect(0, 0, canvas.width, canvas.height);
+    const titleScreen = new image("images/title.png", 0, 0, canvas.width, canvas.height);
+    //const startScreen = new createjs.Shape();
+   // startScreen.graphics.beginFill("blue").drawRect(0, 0, canvas.width, canvas.height);
 
-    const startText = new createjs.Text("Tab to end movement, Enter to end turn, Click for anything else \n the enemy square will light up when your selected unit is in range, simply click on that enemy and you will attack \n you might want the console open to see health and stuff (right click, inspect, console) \n Click to Start ", "30px Arial", "black");
+    //const startText = new createjs.Text("Tab to end movement, Enter to end turn, Click for anything else \n the enemy square will light up when your selected unit is in range, simply click on that enemy and you will attack \n you might want the console open to see health and stuff (right click, inspect, console) \n Click to Start ", "30px Arial", "black");
 
-    startText.textAlign = "center";
-    startText.x = canvas.width / 2;
-    startText.y = canvas.height / 2;
-    stage.addChild(startScreen);
-    stage.addChild(startText);
+   // startText.textAlign = "center";
+    //startText.x = canvas.width / 2;
+    //startText.y = canvas.height / 2;
+    //stage.addChild(startScreen);
+    //stage.addChild(startText);
+    stage.addChild(titleScreen);
     stage.update();
 
     canvas.addEventListener("click", handleStartClick);
@@ -173,8 +175,9 @@ function init() {
       firstClick=true
       canvas.removeEventListener("click", handleStartClick);
       canvas.removeEventListener("keydown", handleStartClick);
-       stage.removeChild(startScreen);
-      stage.removeChild(startText);
+      stage.removeChild(titleScreen);
+      // stage.removeChild(startScreen);
+      //stage.removeChild(startText);
      
       // Add your code to start the game here
        init(); // Call the initialization function
