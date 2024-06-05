@@ -6,6 +6,8 @@
 // Initialization function
 function init() {
   text_box.style.display = 'block'
+  text_box.innerHTML = diolog[currentLine];
+  
   levelSong.loop=true
   levelSong.play();
 

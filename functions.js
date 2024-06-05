@@ -157,6 +157,11 @@ function newLevel(){
   levelSong.loop = true;
   levelSong.play();
 
+  selected_diolog++
+  if (selected_diolog>=diologs.length){
+    selected_diolog=0
+  }
+  diolog = diologs[selected_diolog]
 text_box.style.display = 'block';
   text_box.innerHTML = diolog[currentLine];
   text_box.appendChild
