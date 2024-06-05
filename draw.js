@@ -201,7 +201,9 @@ function draw() {
   drawGrid();
   drawPath();
   drawUnits();
+
  show_stats()
   
+
   stage.update();
 }
