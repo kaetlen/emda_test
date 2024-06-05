@@ -5,7 +5,7 @@
 
 // Initialization function
 function init() {
-
+  text_box.style.display = 'block'
   levelSong.loop=true
   levelSong.play();
 
@@ -65,11 +65,14 @@ function init() {
   
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
-    if (currentLine>=diolog.length && text_box.style.display === 'block'){
+    if (currentLine>=diolog.length-1 && text_box.style.display === 'block'){
+      selected=null
       currentLine=0
     text_box.style.display = 'none';}
     else if(text_box.style.display === 'block'){
+      selected=null
       currentLine++
+      text_box.innerHTML = diolog[currentLine];
     }
   
      const rect = canvas.getBoundingClientRect();

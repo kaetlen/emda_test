@@ -1,2 +1,2 @@
-var diolog1 =["hey","wow"]
+var diolog1 =["GENERAL GOB: You can’t stop him! Nobody can!","ROGUE: Hah! You goblins don’t stand a chance against us. Give it up!","GENERAL GOB: Maybe I don’t- but he’s no goblin. He’s going to crush you.","General Gob scampers way, fading into the trees of the Blackroot Forest.","ARCHER: Don’t let him get away-","KNIGHT: It’s fine- he won’t get far in there anyway. We’ll catch up soon enough.","MAGE: Well, let’s hop to it then, slow pokes!"]
 var diolog=diolog1
