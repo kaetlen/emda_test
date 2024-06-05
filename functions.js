@@ -111,6 +111,7 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
 
 
 function newLevel(){
+ 
   var doAction = false;
   if(!doAction){
   turn = 'enemy'
@@ -119,8 +120,8 @@ function newLevel(){
   set_background++
 
   if (set_background>=backgrounds.length){
-    set_background=0
-    alert('You Win');
+    set_background=backgrounds.length-1
+   win_screen.style.display = 'block';
   }
 
   
@@ -171,6 +172,8 @@ text_box.style.display = 'block';
  
     
     levelSpawnFunctions[set_background]();
+ 
+    
   turn = 'friendly';
  
   
