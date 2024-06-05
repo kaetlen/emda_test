@@ -175,6 +175,7 @@ function show_stats(){
   if(selected){
     selected_stat_block.style.display= 'block';
  let text1 = document.createElement('div');
+ text1.style.paddingLeft = '10px';
         text1.innerText =(selected.name+
         "\n health: "+  selected.health+"/"+selected.maxHealth+ " defence: "+ selected.defense+
         "\n movement: "+ selected.movement+ "/"+selected.maxMovement+
@@ -182,6 +183,7 @@ function show_stats(){
         "\n actions: "+ selected.actions);
         
 selected_stat_block.innerHTML = '';
+
         selected_stat_block.appendChild(text1);
 
     
@@ -193,6 +195,7 @@ selected_stat_block.innerHTML = '';
 if(target){
   target_stat_block.style.display= 'block';
   let text2 = document.createElement('div');
+  text2.style.paddingLeft = '10px';
   text2.innerText = target.health
   target_stat_block.innerHTML = '';
    target_stat_block.appendChild(text2)
