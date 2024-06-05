@@ -51,8 +51,56 @@ function inRange(unit, target) {
   return false;
 }
 
-function enemyTurn() {
-  enemyUnits.forEach(enemy => {
+async function enemyAction(enemy, target){
+
+  if (target && inRange(enemy, target) && enemy.actions > 0) {
+    await sleep(200); 
+    attack(enemy, target);
+    
+  }
+  else if (target) {
+    let position = findattackPosition(enemy, target, enemy.range[0], enemy.range[1]);
+    if (position) {
+      const path = findPath(enemy.col, enemy.row, position.col, position.row, enemy.movement);
+      if (path && path.length > 0) {
+        let steps = Math.min(enemy.movement, path.length - 1);
+        await sleep(200); 
+        enemyMove(enemy, path[steps]);
+        
+       
+        if (target && inRange(enemy, target) && enemy.actions > 0) {
+           await sleep(200);
+          attack(enemy, target);
+          
+        }
+      }
+    }
+    else {
+      // If no valid attack position is found, move towards the target
+      const path = findPath(enemy.col, enemy.row, target.col, target.row, enemy.movement*4);
+      if (path && path.length > 0) {
+        let steps = Math.min(enemy.movement, path.length - 1);
+        await sleep(200); 
+        enemyMove(enemy, path[steps]);
+        
+      }
+      
+    }
+  }
+  else {
+    // If no target is found, the enemy does nothing
+  }
+}
+
+async function enemyTurn() {
+ 
+
+   enemyUnits.forEach(enemy => {
+    
+      
+   
+
+
     let target = null;
     let minDistance = Infinity;
     friendlyUnits.forEach(friendly => {
@@ -66,38 +114,16 @@ function enemyTurn() {
         minDistance = distance;
       }
     }
+    enemyAction(enemy,target);
     });
-    if (target && inRange(enemy, target) && enemy.actions > 0) {
-      attack(enemy, target);
-    }
-    else if (target) {
-      let position = findattackPosition(enemy, target, enemy.range[0], enemy.range[1]);
-      if (position) {
-        const path = findPath(enemy.col, enemy.row, position.col, position.row, enemy.movement);
-        if (path && path.length > 0) {
-          let steps = Math.min(enemy.movement, path.length - 1);
-          enemyMove(enemy, path[steps]);
-          if (target && inRange(enemy, target) && enemy.actions > 0) {
-            attack(enemy, target);
-          }
-        }
-      }
-      else {
-        // If no valid attack position is found, move towards the target
-        const path = findPath(enemy.col, enemy.row, target.col, target.row, enemy.movement*3);
-        if (path && path.length > 0) {
-          let steps = Math.min(enemy.movement, path.length - 1);
-          enemyMove(enemy, path[steps]);
-        }
-        
-      }
-    }
-    else {
-      // If no target is found, the enemy does nothing
-    }
+   
+
+  
   });
+   await sleep(500); 
   endTurn();
 }
+
 
 function spawnLevel1Enemies(){
   enemyUnits.push(new Unit("gobbo",11, 20,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
@@ -112,7 +138,7 @@ new Unit("gobbo",4, 5,new createjs.Sprite(gobSpriteSheet, 'run'),10, 10, 10, 10,
 function spawnLevel2Enemies(){
 
   enemyUnits.push(new Unit("gobbo",16, 16,new createjs.Sprite(gobSpriteSheet, 'run'),12, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
-new Unit("general Gob",15, 15,new createjs.Sprite(genGobSpriteSheet, 'run'),16, 12, 16, 10, 10, 10,[3,5], 2, [1, 1], 1, 1),
+new Unit("general Gob",15, 15,new createjs.Sprite(genGobSpriteSheet, 'run'),16, 14, 16, 10, 10, 10,[3,5], 2, [1, 1], 1, 1),
 new Unit("gobbo",16, 14,new createjs.Sprite(gobSpriteSheet, 'run'),12, 10, 10, 10, 10, 10,[1,4], 0, [1, 1], 1, 1),
 new Unit("gobbo mage",14, 14,new createjs.Sprite(gobboMageSpriteSheet, 'run'),10, 12, 10, 12, 10, 10,[1,4], 0, [1.1, 4], 1, 1),
 new Unit("gobbo mage",14, 16,new createjs.Sprite(gobboMageSpriteSheet, 'run'),10, 12, 10, 12, 10, 10,[1,4], 0, [1.1, 4], 1, 1),

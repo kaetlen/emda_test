@@ -109,7 +109,8 @@ var levelSong = levelsongs[set_background]
 
 var selected_stat_block = document.getElementById('fixedShape');
 var target_stat_block = document.getElementById('fixedShape2');
-
+var text_box = document.getElementById('fixedShape3');
+text_box.style.display = 'none';
 
 
 

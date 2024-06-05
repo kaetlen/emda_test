@@ -31,6 +31,10 @@ function distanceBetween(col1, row1, col2, row2) {
 return Math.sqrt(Math.pow(col1 - col2, 2) + Math.pow(row1 - row2, 2));
 };
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function isObstacleBetween(startCol, startRow, endCol, endRow) {
 const dx = endCol - startCol;
 const dy = endRow - startRow;
@@ -107,6 +111,7 @@ if (isValidMove || newCol===unit.scol && newRow ===unit.srow) {
 
 
 function newLevel(){
+  turn = 'enemy'
   levelSong.pause();
   levelSong.currentTime = 0;
   set_background++
@@ -149,7 +154,11 @@ function newLevel(){
 
   levelSong.loop = true;
   levelSong.play();
+text_box.style.display = 'block';
+  text_box.innerHTML = "test";
+  text_box.appendChild
 
+  
   levelSpawnFunctions[set_background]();
   turn = 'friendly';
 
