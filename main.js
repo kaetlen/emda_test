@@ -7,7 +7,7 @@
 function init() {
   text_box.style.display = 'block'
   text_box.innerHTML = diolog[currentLine];
-  
+
   levelSong.loop=true
   levelSong.play();
 
@@ -68,11 +68,11 @@ function init() {
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
     if (currentLine>=diolog.length-1 && text_box.style.display === 'block'){
-      selected=null
+     
       currentLine=0
     text_box.style.display = 'none';}
     else if(text_box.style.display === 'block'){
-      selected=null
+      
       currentLine++
       text_box.innerHTML = diolog[currentLine];
     }
@@ -133,7 +133,10 @@ function init() {
   
    // Update the stage on each tick
    createjs.Ticker.on("tick", () => {
-    
+    if(text_box.style.display === 'block'){
+      selected=null
+      target=null
+    }
       
   
      checkDeath();
