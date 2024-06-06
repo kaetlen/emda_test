@@ -106,10 +106,10 @@ var title_screen_music = new Audio("sounds/titleScreen.wav");
 const levelsongs = [Lvl_1_2_Music,Lvl_1_2_Music,boss_music]
 var levelSong = levelsongs[set_background]
 
-var con_button = document.getElementById('con_button');
-var dex_button = document.getElementById('dex_button');
-var str_button = document.getElementById('str_button');
-var int_button = document.getElementById('int_button');
+let con_button = document.getElementById('con_square');
+var dex_button = document.getElementById('dex_square');
+var str_button = document.getElementById('str_square');
+var int_button = document.getElementById('int_square');
 var selected_stat_block = document.getElementById('fixedShape');
 var target_stat_block = document.getElementById('fixedShape2');
 var text_box = document.getElementById('fixedShape3');
