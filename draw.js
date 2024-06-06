@@ -173,6 +173,11 @@ if (selected) {
 
 function show_stats(){
   if(selected){
+    con_button.style.display = 'block';
+    dex_button.style.display = 'block';
+    str_button.style.display = 'block';
+    int_button.style.display = 'block';
+
     selected_stat_block.style.display= 'block';
   let text1 = document.createElement('div');
   text1.style.paddingLeft = '10px';

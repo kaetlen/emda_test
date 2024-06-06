@@ -138,7 +138,7 @@ function init() {
   
    // Update the stage on each tick
    createjs.Ticker.on("tick", () => {
-    if(text_box.style.display === 'block'){
+    if(text_box.style.display === 'flex'){
       selected=null
       target=null
     }
