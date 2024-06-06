@@ -233,6 +233,11 @@ function isValidStep(unit, step) {
     return false;
   }
 
+  // Check if there is an obstacle between the unit's current position and the step
+  if (isObstacleBetween(unit.col, unit.row, step.col, step.row)) {
+    return false;
+  }
+
   return true;
 }
 

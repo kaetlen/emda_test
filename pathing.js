@@ -131,6 +131,7 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0
       if (closedList.has(`${neighbor.col},${neighbor.row}`)) {
         continue;
       }
+      
 
       const existingNode = openList._heap.find(node => node.col === neighbor.col && node.row === neighbor.row);
       if (existingNode) {
@@ -153,6 +154,7 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0
       path.unshift({ col: current.col, row: current.row });
       current = cameFrom[current.row][current.col];
     }
+   
     return path;
   }
 
