@@ -9,6 +9,10 @@ body {
     margin: 0 auto;
     background-color: #f0f0f0; /* Background color of the canvas */
     border: 1px solid #cccccc; /* Border around the canvas */
+    color: #0000
 }
 
 /* Add any additional styles for your HTML elements here */
+p {
+    color: black;
+}

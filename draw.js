@@ -174,30 +174,35 @@ function drawStatButtons(){
   con_button.style.display = 'block';
   let con_button_text = document.createElement('div');
   con_button_text.innerText = "Con\n"+selected.constitution;
+  con_button_text.style.color = 'black';
   con_button.innerHTML = '';
   con_button.appendChild(con_button_text);
 
   dex_button.style.display = 'block';
   let dex_button_text = document.createElement('div');
   dex_button_text.innerText = "Dex\n"+selected.dextarity;
+  dex_button_text.style.color = 'black';
   dex_button.innerHTML = '';
   dex_button.appendChild(dex_button_text);
 
   str_button.style.display = 'block';
   let str_button_text = document.createElement('div');
   str_button_text.innerText = "Str\n"+selected.strength;
+  str_button_text.style.color = 'black';
   str_button.innerHTML = '';
   str_button.appendChild(str_button_text);
 
   int_button.style.display = 'block';
   let int_button_text = document.createElement('div');
   int_button_text.innerText = "Int\n"+selected.inteligence;
+  int_button_text.style.color = 'black';
   int_button.innerHTML = '';
   int_button.appendChild(int_button_text);
 
   dash_button.style.display = 'block';
   let dash_button_text = document.createElement('div');
   dash_button_text.innerText = "Dash";
+  dash_button_text.style.color = 'black';
   dash_button.innerHTML = '';
   dash_button.appendChild(dash_button_text);
 }
@@ -209,6 +214,7 @@ function show_stats(){
   let text1 = document.createElement('div');
   text1.style.paddingLeft = '10px';
   text1.style.fontSize = '20px';
+  text1.style.color = 'black';
 
       text1.innerText =("Unit: "+selected.name+" Xp: "+selected.xp_points+
         "\n Health: "+  selected.health+"/"+selected.maxHealth+ " Defence: "+ selected.defense+
@@ -233,6 +239,7 @@ function show_stats(){
     let text2 = document.createElement('div');
     text2.style.paddingLeft = '10px';
     text2.style.fontSize = '20px';
+    text2.style.color = 'black';
 
       text2.innerText =("Target: "+ target.name+ 
         "\n Health: "+ target.health+"/"+target.maxHealth+ " Defence: "+ target.defense+

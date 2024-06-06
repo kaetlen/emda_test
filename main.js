@@ -171,7 +171,7 @@ selected.xp_points-=1;
    document.addEventListener('mousemove', function(e) {
     const mouseX = e.clientX;
     const mouseY = e.clientY;
-    console.log(`Mouse position: ${mouseX}, ${mouseY}`);
+    //console.log(`Mouse position: ${mouseX}, ${mouseY}`);
 
     if(selected != undefined && mouseX<50 && mouseY<865 && mouseX>0 && mouseY>813  ){ 
       if(selected.xp_points>=1){
