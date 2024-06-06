@@ -153,21 +153,40 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0
 
 function getNeighbors(node) {
   const neighbors = [];
-  for (let col = node.col - 1; col <= node.col + 1; col++) {
-    for (let row = node.row - 1; row <= node.row + 1; row++) {
-      if (col === node.col && row === node.row) {
-        continue;
-      }
-      if (col < 0 || col >= gridArray[0].length || row < 0 || row >= gridArray.length) {
-        continue;
-      }
-      // Check if the neighbor itself is an obstacle
-      if (gridArray[row][col] !== 0) {
-        continue;
-      }
-      neighbors.push({ col, row });
+  const directions = [
+    { col: -1, row: 0 }, // left
+    { col: 1, row: 0 }, // right
+    { col: 0, row: -1 }, // up
+    { col: 0, row: 1 }, // down
+    { col: -1, row: -1 }, // up-left
+    { col: 1, row: -1 }, // up-right
+    { col: -1, row: 1 }, // down-left
+    { col: 1, row: 1 } // down-right
+  ];
+
+  for (const direction of directions) {
+    const col = node.col + direction.col;
+    const row = node.row + direction.row;
+
+    if (col < 0 || col >= gridArray[0].length || row < 0 || row >= gridArray.length) {
+      continue;
     }
+
+    // Check if the neighbor itself is an obstacle
+    if (gridArray[row][col] !== 0) {
+      continue;
+    }
+
+    // Check if moving diagonally would result in moving through an obstacle
+    if (direction.col !== 0 && direction.row !== 0) {
+      if (gridArray[node.row + direction.row][node.col] !== 0 || gridArray[node.row][node.col + direction.col] !== 0) {
+        continue;
+      }
+    }
+
+    neighbors.push({ col, row });
   }
+
   return neighbors;
 }
 
