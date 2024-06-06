@@ -10,7 +10,8 @@ if(randomInt(1,100)+attacker.accuracy>=10+defender.doge){
    console.log("target hit for ", damage, " damage");
    console.log("target health", defender.health);
    if(defender.health<=0){
-     attacker.xp_points+=.075*defender.maxHealth;
+     attacker.xp_points+=.75;
+     target = null;
    }
 }
 else{

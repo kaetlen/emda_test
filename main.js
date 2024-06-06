@@ -72,21 +72,22 @@ function init() {
   
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
-    if(on_con_button ){
+    if(on_con_button || on_str_button || on_dex_button || on_int_button || on_dash_button){
+    if(selected &&on_con_button ){
       if(selected.constitution<20 && selected.xp_points>=1){
       selected.constitution+=1;
 selected.maxHealth= 10+Math.ceil((selected.constitution-10)/2);
 selected.xp_points-=1;
       }
     }
-    else if(on_str_button ){
+    else if(selected && on_str_button ){
       if(selected.strength<20 && selected.xp_points>=1){
       selected.strength+=1;
       selected.attack = Math.max( Math.floor((selected.strength-10)/2),Math.floor((selected.dextarity-10)/2),Math.floor((selected.inteligence-10)/2));
       selected.xp_points-=1;
       }
     }
-    else if(on_dex_button ){
+    else if(selected && on_dex_button ){
       if(selected.dextarity<20 && selected.xp_points>=1){
       selected.dextarity+=1;
       selected.maxMovement = 4+Math.floor((selected.dextarity-10)/3);
@@ -96,20 +97,22 @@ selected.xp_points-=1;
 selected.xp_points-=1;
       }
     }
-    else if(on_int_button ){
+    else if(selected && on_int_button ){
       if(selected.inteligence<20 && selected.xp_points>=1){
       selected.inteligence+=1;
       selected.attack = Math.max( Math.floor((selected.strength-10)/2),Math.floor((selected.dextarity-10)/2),Math.floor((selected.inteligence-10)/2));
       selected.xp_points-=1;
       }
     }
-    else if(on_dash_button ){
+    else if(selected && on_dash_button ){
       if (selected.actions>=1){
       selected.movement += selected.maxMovement;
       selected.actions -= 1;
       console.log("dashing");
+      on_dash_button = false;
       }
     }
+  }
     else{
 
     if (currentLine>=diolog.length-1 && text_box.style.display === 'flex'){
@@ -201,7 +204,7 @@ selected.xp_points-=1;
      }
      else{
       str_button.style.backgroundColor = "gray";
-      son_str_button = false;
+      on_str_button = false;
      }
 
       if(selected != undefined && mouseX<150 && mouseY<865 && mouseX>=100 && mouseY>813  ){
@@ -236,7 +239,7 @@ selected.xp_points-=1;
 
       if(selected != undefined && mouseX<250 && mouseY<865 && mouseX>=200 && mouseY>813  ){
         if (selected.actions>=1){
-        dash_button.style.backgroundColor = "red";
+        dash_button.style.backgroundColor = "purple";
         }
         on_dash_button = true;
       }
