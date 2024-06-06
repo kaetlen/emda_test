@@ -93,34 +93,34 @@ async function enemyAction(enemy, target){
 }
 
 async function enemyTurn() {
- 
-
-   enemyUnits.forEach(enemy => {
-    
-      
-   
-
-
+  enemyUnits.forEach(async enemy => {
     let target = null;
     let minDistance = Infinity;
+    let allUnitsOutOfRange = true;
+
     friendlyUnits.forEach(friendly => {
       if (friendly.health <= 0) {
         return;
       }
-      else{
       const distance = Math.sqrt(Math.pow(friendly.col - enemy.col, 2) + Math.pow(friendly.row - enemy.row, 2));
       if (distance < minDistance) {
         target = friendly;
         minDistance = distance;
       }
-    }
-    enemyAction(enemy,target);
+      if (inRange(enemy, friendly)) {
+        allUnitsOutOfRange = false;
+      }
     });
-   
 
-  
+    if (allUnitsOutOfRange && enemy.actions > 0) {
+      enemy.movement *= 2;
+      enemy.actions -= 1;
+    }
+
+    await enemyAction(enemy, target);
   });
-   await sleep(500); 
+
+  await sleep(500); 
   endTurn();
 }
 

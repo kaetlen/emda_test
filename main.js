@@ -19,10 +19,10 @@ function init() {
   
 
   ///////////////////////////////////////// strength, dextarity, constitution, inteligence, wisdom, carisma,weponDamage defense, range = [1, 1], maxActions, maxBonusActions
-  friendlyUnits = [new Unit("archer",3, 0,new createjs.Sprite(archerSpriteSheet, 'run'),10, 18, 12, 8, 8, 10,[1,4], 0, [1.1, 5], 1, 1),
-  new Unit("knight",4, 1,new createjs.Sprite(knightSpriteSheet, 'run'),18, 10, 16, 8, 8, 8,[2,6], 4, [1, 1], 1, 1),
-  new Unit("rouge",0, 2,new createjs.Sprite(rougeSpriteSheet, 'run'),10, 20, 10, 8, 8, 10,[1,4], 0, [1, 1], 1, 1),
-  new Unit("mage",1, 1,new createjs.Sprite(mageSpriteSheet, 'run'),8, 12, 10, 18, 8, 10,[1,4], 1, [1.1, 4], 1, 1),
+  friendlyUnits = [new Unit("archer",3, 0,new createjs.Sprite(archerSpriteSheet, 'run'),10, 17, 11, 8, 8, 10,[1,4], 0, [1.1, 5], 1, 1),
+  new Unit("knight",4, 1,new createjs.Sprite(knightSpriteSheet, 'run'),17, 10, 16, 8, 8, 8,[2,6], 4, [1, 1], 1, 1),
+  new Unit("rouge",0, 2,new createjs.Sprite(rougeSpriteSheet, 'run'),10, 17, 11, 8, 8, 10,[1,4], 0, [1, 1], 1, 1),
+  new Unit("mage",1, 1,new createjs.Sprite(mageSpriteSheet, 'run'),8, 13, 11, 17, 8, 10,[1,4], 1, [1.1, 4], 1, 1),
   ];
   
   spawnLevel1Enemies();
@@ -72,13 +72,39 @@ function init() {
   
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
-    if(on_con_button){
-      if(selected.constitution<20){
+    if(on_con_button ){
+      if(selected.constitution<20 && selected.xp_points>=1){
       selected.constitution+=1;
 selected.maxHealth= 10+Math.ceil((selected.constitution-10)/2);
+selected.xp_points-=1;
+      }
+    }
+    else if(on_str_button ){
+      if(selected.strength<20 && selected.xp_points>=1){
+      selected.strength+=1;
+      selected.attack = Math.max( Math.floor((selected.strength-10)/2),Math.floor((selected.dextarity-10)/2),Math.floor((selected.inteligence-10)/2));
+      selected.xp_points-=1;
+      }
+    }
+    else if(on_dex_button ){
+      if(selected.dextarity<20 && selected.xp_points>=1){
+      selected.dextarity+=1;
+      selected.maxMovement = 4+Math.floor((selected.dextarity-10)/3);
+      selected.accuracy = Math.floor((selected.dextarity-10)/2);
+      selected.doge = Math.floor((selected.dextarity-10));
+      selected.attack = Math.max( Math.floor((selected.strength-10)/2),Math.floor((selected.dextarity-10)/2),Math.floor((selected.inteligence-10)/2));
+selected.xp_points-=1;
+      }
+    }
+    else if(on_int_button ){
+      if(selected.inteligence<20 && selected.xp_points>=1){
+      selected.inteligence+=1;
+      selected.attack = Math.max( Math.floor((selected.strength-10)/2),Math.floor((selected.dextarity-10)/2),Math.floor((selected.inteligence-10)/2));
+      selected.xp_points-=1;
       }
     }
     else{
+
     if (currentLine>=diolog.length-1 && text_box.style.display === 'flex'){
       currentLine=0
     text_box.style.display = 'none';}
@@ -142,14 +168,65 @@ selected.maxHealth= 10+Math.ceil((selected.constitution-10)/2);
     const mouseY = e.clientY;
     console.log(`Mouse position: ${mouseX}, ${mouseY}`);
 
-    if(selected != undefined && mouseX<50 && mouseY<865 && mouseX>0 && mouseY>813){ 
+    if(selected != undefined && mouseX<50 && mouseY<865 && mouseX>0 && mouseY>813  ){ 
+      if(selected.xp_points>=1){
       con_button.style.backgroundColor = "red";
+      }
       on_con_button = true;
+     }
+     else if(selected != undefined && selected.xp_points>=1){
+      con_button.style.backgroundColor = "gold";
+      on_con_button = false;
      }
      else{
       con_button.style.backgroundColor = "gray";
       on_con_button = false;
      }
+
+     if(selected != undefined && mouseX<100 && mouseY<865 && mouseX>=50 && mouseY>813  ){ 
+      if(selected.xp_points>=1){
+      str_button.style.backgroundColor = "red";
+      }
+      on_str_button = true;
+     }
+     else if(selected != undefined && selected.xp_points>=1){
+      str_button.style.backgroundColor = "gold";
+      on_str_button = false;
+     }
+     else{
+      str_button.style.backgroundColor = "gray";
+      son_str_button = false;
+     }
+
+      if(selected != undefined && mouseX<150 && mouseY<865 && mouseX>=100 && mouseY>813  ){
+        if(selected.xp_points>=1){
+        dex_button.style.backgroundColor = "red";
+        }
+        on_dex_button = true;
+      }
+      else if(selected != undefined && selected.xp_points>=1){
+        dex_button.style.backgroundColor = "gold";
+        on_dex_button = false;
+      }
+      else{
+        dex_button.style.backgroundColor = "gray";
+        on_dex_button = false;
+      }
+
+      if(selected != undefined && mouseX<200 && mouseY<865 && mouseX>=150 && mouseY>813  ){
+        if(selected.xp_points>=1){
+        int_button.style.backgroundColor = "red";
+        }
+        on_int_button = true;
+      }
+      else if(selected != undefined && selected.xp_points>=1){
+        int_button.style.backgroundColor = "gold";
+        on_int_button = false;
+      }
+      else{
+        int_button.style.backgroundColor = "gray";
+        on_int_button = false;
+      }
 });
   
 
