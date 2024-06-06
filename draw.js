@@ -174,9 +174,17 @@ if (selected) {
 function show_stats(){
   if(selected){
     con_button.style.display = 'block';
+    let con_button_text = document.createElement('div');
+    con_button_text.innerText = "Con\n"+selected.constitution;
     dex_button.style.display = 'block';
+    let dex_button_text = document.createElement('div');
+    dex_button_text.innerText = "Dex\n"+selected.dextarity;
     str_button.style.display = 'block';
+    let str_button_text = document.createElement('div');
+    str_button_text.innerText = "Str\n"+selected.strength;
     int_button.style.display = 'block';
+    let int_button_text = document.createElement('div');
+    int_button_text.innerText = "Int\n"+selected.inteligence;
 
     selected_stat_block.style.display= 'block';
   let text1 = document.createElement('div');
