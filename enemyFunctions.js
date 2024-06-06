@@ -34,14 +34,42 @@ function enemyMove(enemy, targetPosition) {
 
   const isObstacle = gridArray[targetPosition.row][targetPosition.col] !== 0;
 
-  // Only move the enemy if the target position is not occupied
-  if (!isOccupied&& !isOccupiedByFriendly && !isObstacle) {
-    gridArray[enemy.row][enemy.col] = 0;
-    enemy.col = targetPosition.col;
-    enemy.row = targetPosition.row;
-    enemy.scol = enemy.col;
-  enemy.srow = enemy.row;
+  // If the target position is occupied, find the nearest unoccupied position
+  if (isOccupied || isOccupiedByFriendly || isObstacle) {
+    let nearestUnoccupiedPosition = null;
+    let minDistance = Infinity;
+
+    for(let i = 0; i < GRID_WIDTH; i++){
+      for(let j = 0; j < GRID_HEIGHT; j++){
+        const isOccupied = enemyUnits.some(otherEnemy => 
+          otherEnemy.col === i && otherEnemy.row === j 
+        );
+        const isOccupiedByFriendly = friendlyUnits.some(friendly =>
+          friendly.col === i && friendly.row === j
+        );
+        const isObstacle = gridArray[j][i] !== 0;
+
+        if (!isOccupied && !isOccupiedByFriendly && !isObstacle) {
+          const distance = Math.abs(targetPosition.col - i) + Math.abs(targetPosition.row - j);
+          if (distance < minDistance) {
+            nearestUnoccupiedPosition = {col: i, row: j};
+            minDistance = distance;
+          }
+        }
+      }
+    }
+
+    if (nearestUnoccupiedPosition) {
+      targetPosition = nearestUnoccupiedPosition;
+    }
   }
+
+  // Move the enemy to the target position
+  gridArray[enemy.row][enemy.col] = 0;
+  enemy.col = targetPosition.col;
+  enemy.row = targetPosition.row;
+  enemy.scol = enemy.col;
+  enemy.srow = enemy.row;
 }
 
 function inRange(unit, target) {
@@ -52,11 +80,9 @@ function inRange(unit, target) {
 }
 
 async function enemyAction(enemy, target){
-
   if (target && inRange(enemy, target) && enemy.actions > 0) {
-    await sleep(200); 
     attack(enemy, target);
-    
+    await sleep(200); 
   }
   else if (target) {
     let position = findattackPosition(enemy, target, enemy.range[0], enemy.range[1]);
@@ -64,27 +90,38 @@ async function enemyAction(enemy, target){
       const path = findPath(enemy.col, enemy.row, position.col, position.row, enemy.movement);
       if (path && path.length > 0) {
         let steps = Math.min(enemy.movement, path.length - 1);
-        await sleep(200); 
-        enemyMove(enemy, path[steps]);
         
+        enemyMove(enemy, path[steps]);
+        await sleep(200); 
        
-        if (target && inRange(enemy, target) && enemy.actions > 0) {
-           await sleep(200);
+        if (target && inRange(enemy, target) && enemy.actions >=1) {
           attack(enemy, target);
-          
+          await sleep(200);
         }
       }
     }
     else {
-      // If no valid attack position is found, move towards the target
-      const path = findPath(enemy.col, enemy.row, target.col, target.row, enemy.movement*4);
+      let path = findPath(enemy.col, enemy.row, target.col, target.row, enemy.movement*4);
       if (path && path.length > 0) {
         let steps = Math.min(enemy.movement, path.length - 1);
-        await sleep(200); 
         enemyMove(enemy, path[steps]);
-        
+        await sleep(200); 
+        if (target && inRange(enemy, target) && enemy.actions >=1) {
+          attack(enemy, target);
+          await sleep(200);
+        }
+        else if(enemy.actions >=1){
+          path= findPath(enemy.col, enemy.row, target.col, target.row, enemy.movement*4);
+          if(path && path.length > 0){
+            steps = Math.min(enemy.movement, path.length - 1);
+            enemy.actions--
+            console.log("enemy dashing")
+           
+            enemyMove(enemy, path[steps]);
+            await sleep(200); 
+          }
+        }
       }
-      
     }
   }
   else {
@@ -93,35 +130,34 @@ async function enemyAction(enemy, target){
 }
 
 async function enemyTurn() {
-  enemyUnits.forEach(async enemy => {
+ 
+
+   enemyUnits.forEach(enemy => {
+    
+      
+   
+
+
     let target = null;
     let minDistance = Infinity;
-    let allUnitsOutOfRange = true;
-
     friendlyUnits.forEach(friendly => {
       if (friendly.health <= 0) {
         return;
       }
+      else{
       const distance = Math.sqrt(Math.pow(friendly.col - enemy.col, 2) + Math.pow(friendly.row - enemy.row, 2));
       if (distance < minDistance) {
         target = friendly;
         minDistance = distance;
       }
-      if (inRange(enemy, friendly)) {
-        allUnitsOutOfRange = false;
-      }
-    });
-
-    if (allUnitsOutOfRange && enemy.actions > 0) {
-      enemy.movement *= 2;
-      enemy.actions -= 1;
-      console.log("dashing");
     }
+    enemyAction(enemy,target);
+    });
+   
 
-    await enemyAction(enemy, target);
+  
   });
-
-  await sleep(500); 
+   await sleep(500); 
   endTurn();
 }
 

@@ -161,7 +161,8 @@ function getNeighbors(node) {
       if (col < 0 || col >= gridArray[0].length || row < 0 || row >= gridArray.length) {
         continue;
       }
-      if (isObstacleBetween(node.col, node.row, col, row)) {
+      // Check if the neighbor itself is an obstacle
+      if (gridArray[row][col] !== 0) {
         continue;
       }
       neighbors.push({ col, row });
