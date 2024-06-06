@@ -2,14 +2,15 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    color: #000000; /* Default text color set to black */
 }
 
 #myCanvas {
     display: block;
     margin: 0 auto;
-    background-color: #f0f0f0; /* Background color of the canvas */
-    border: 1px solid #cccccc; /* Border around the canvas */
-    color: #0000
+    background-color: #b7e5eb; /* Background color of the canvas */
+    border: 1px solid #0a0a0a; /* Border around the canvas */
+    color: #000000; /* Text color in the canvas set to black */
 }
 
 /* Add any additional styles for your HTML elements here */

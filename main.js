@@ -118,6 +118,7 @@ selected.xp_points-=1;
     else if(text_box.style.display === 'flex'){
       currentLine++
       text_box.innerHTML = diolog[currentLine];
+      text_box.style.color = 'black';
     }
 
      const rect = canvas.getBoundingClientRect();
