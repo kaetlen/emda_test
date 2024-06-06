@@ -72,6 +72,10 @@ function init() {
   
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
+    if(on_con_button){
+      selected.constitution+=1;
+
+    }
     if (currentLine>=diolog.length-1 && text_box.style.display === 'flex'){
       currentLine=0
     text_box.style.display = 'none';}
@@ -131,10 +135,26 @@ function init() {
      }
     }
    });
+
+   document.addEventListener('mousemove', function(e) {
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    console.log(`Mouse position: ${mouseX}, ${mouseY}`);
+
+    if(selected != undefined && mouseX<50 && mouseY<865 && mouseX>0 && mouseY>813){ 
+      con_button.style.backgroundColor = "red";
+      on_con_button = true;
+     }
+     else{
+      con_button.style.backgroundColor = "gray";
+      on_con_button = false;
+     }
+});
   
-  
+
    // Update the stage on each tick
    createjs.Ticker.on("tick", () => {
+   
     if(text_box.style.display === 'flex'){
       selected=null
       target=null
@@ -153,8 +173,10 @@ function init() {
         alert("Game Over");
 
      }
+
      // Clear the stage and redraw the grid to show updated starting positions
-  
+
+     
      
      draw();
    

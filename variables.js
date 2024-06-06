@@ -117,6 +117,10 @@ text_box.style.display = 'none';
 var win_screen = document.getElementById('fixedShape4');
 var currentLine=0
 
+var on_con_button = false;
+var on_dex_button = false;
+var on_str_button = false;
+var on_int_button = false;
 
 var loopedAudio;
 
