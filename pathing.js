@@ -74,6 +74,14 @@ class PriorityQueue {
 }
 
 function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0) {
+    // Check if the destination is reachable
+    const destination = { col: endCol, row: endRow };
+    const destinationNeighbors = getNeighbors(destination);
+    if (destinationNeighbors.length === 0) {
+      // The destination is surrounded by obstacles, return null or an appropriate value
+      return null;
+    }
+    
   const openList = new PriorityQueue((a, b) => a.f < b.f);
   const closedList = new Set();
   const cameFrom = Array(gridArray.length).fill().map(() => Array(gridArray[0].length).fill(null));
@@ -151,6 +159,93 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0
   return null;
 }
 
+function findPathMaxDistance(startCol, startRow, endCol, endRow, maxDistance) {
+     // Check if the destination is reachable
+     const destination = { col: endCol, row: endRow };
+     const destinationNeighbors = getNeighbors(destination);
+     if (destinationNeighbors.length === 0) {
+       // The destination is surrounded by obstacles, return null or an appropriate value
+       return null;
+     }
+     
+   const openList = new PriorityQueue((a, b) => a.f < b.f);
+   const closedList = new Set();
+   const cameFrom = Array(gridArray.length).fill().map(() => Array(gridArray[0].length).fill(null));
+ 
+   let closestNode = null;
+   let minH = Infinity;
+ 
+   openList.push({ col: startCol, row: startRow, g: 0, h: 0, f: 0 });
+ 
+   while (openList.length > 0) {
+     let currentNode = openList.pop();
+     if(currentNode.g > maxDistance){
+        break;}
+     if (currentNode.h < minH) {
+       closestNode = currentNode;
+       minH = currentNode.h;
+     }
+ 
+     if (currentNode.col === endCol && currentNode.row === endRow) {
+       const path = [];
+       let current = currentNode;
+       while (current) {
+         path.unshift({ col: current.col, row: current.row });
+         current = cameFrom[current.row][current.col];
+       }
+       let distance = 0;
+       for (let i = 1; i < path.length; i++) {
+         const dx = path[i].col - path[i - 1].col;
+         const dy = path[i].row - path[i - 1].row;
+         distance += (dx !== 0 && dy !== 0) ? Math.sqrt(2) : 1;
+       }
+       if (distance <= maxDistance && distance >= minDistance) {
+         return path;
+       } else {
+         return null;
+       }
+     }
+ 
+     closedList.add(`${currentNode.col},${currentNode.row}`);
+ 
+     const neighbors = getNeighbors(currentNode, startCol, startRow, maxDistance);
+ 
+     for (const neighbor of neighbors) {
+       const isDiagonal = Math.abs(neighbor.col - currentNode.col) === 1 && Math.abs(neighbor.row - currentNode.row) === 1;
+       const g = currentNode.g + ((isDiagonal) ? Math.sqrt(2) : 1);
+       const h = Math.sqrt(Math.pow(neighbor.col - endCol, 2) + Math.pow(neighbor.row - endRow, 2)); // Euclidean distance
+       const f = g + h;
+ 
+       if (closedList.has(`${neighbor.col},${neighbor.row}`)) {
+         continue;
+       }
+ 
+       const existingNode = openList._heap.find(node => node.col === neighbor.col && node.row === neighbor.row);
+       if (existingNode) {
+         if (g < existingNode.g) {
+           existingNode.g = g;
+           existingNode.f = f;
+           cameFrom[neighbor.row][neighbor.col] = currentNode;
+         }
+       } else {
+         openList.push({ col: neighbor.col, row: neighbor.row, g, h, f });
+         cameFrom[neighbor.row][neighbor.col] = currentNode;
+       }
+     }
+   }
+ 
+   if (closestNode) {
+     const path = [];
+     let current = closestNode;
+     while (current) {
+       path.unshift({ col: current.col, row: current.row });
+       current = cameFrom[current.row][current.col];
+     }
+     return path;
+   }
+ 
+   return null;
+}
 function getNeighbors(node) {
   const neighbors = [];
   const directions = [
