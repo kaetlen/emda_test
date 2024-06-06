@@ -74,8 +74,9 @@ function init() {
    document.addEventListener("mouseup", () => {
     if(on_con_button){
       selected.constitution+=1;
-
+selected.maxHealth= 10+Math.ceil((selected.constitution-10)/2);
     }
+    else{
     if (currentLine>=diolog.length-1 && text_box.style.display === 'flex'){
       currentLine=0
     text_box.style.display = 'none';}
@@ -111,10 +112,7 @@ function init() {
      else {
        selected = units.find(unit => unit.col === gridPosition[0] && unit.row === gridPosition[1]);
      }
-    
-
-    
-    
+  
      if (selected != undefined && selected.health>0) {
        console.log("selected is ", selected);
          distance = Math.sqrt(Math.pow(gridPosition[0] - selected.col, 2) + Math.pow(gridPosition[1] - selected.row, 2));
@@ -134,6 +132,7 @@ function init() {
        oldSelected = selected;
      }
     }
+  }
    });
 
    document.addEventListener('mousemove', function(e) {

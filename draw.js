@@ -204,7 +204,7 @@ function show_stats(){
   text1.style.paddingLeft = '10px';
   text1.style.fontSize = '20px';
 
-      text1.innerText =("Unit: "+selected.name+
+      text1.innerText =("Unit: "+selected.name+" Xp: "+selected.xp_points+
         "\n Health: "+  selected.health+"/"+selected.maxHealth+ " Defence: "+ selected.defense+
         "\n Movement: "+ selected.movement+ "/"+selected.maxMovement+
         "\n Damage: "+(selected.attack+selected.weponDamage[0])+"-"+(selected.attack+selected.weponDamage[1])+" Range: "+Math.ceil(selected.range[0])+'-'+Math.floor(selected.range[1])+ 
@@ -227,7 +227,7 @@ function show_stats(){
     text2.style.paddingLeft = '10px';
     text2.style.fontSize = '20px';
 
-      text2.innerText =("Target: "+ target.name+
+      text2.innerText =("Target: "+ target.name+ 
         "\n Health: "+ target.health+"/"+target.maxHealth+ " Defence: "+ target.defense+
         "\n Movement: "+ target.movement+ "/"+target.maxMovement+
         "\n Damage: "+(target.attack+target.weponDamage[0])+"-"+(target.attack+target.weponDamage[1])+" Range: "+Math.ceil(target.range[0])+'-'+Math.floor(target.range[1])+
