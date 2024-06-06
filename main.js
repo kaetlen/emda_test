@@ -239,6 +239,10 @@ selected.xp_points-=1;
         }
         on_dash_button = true;
       }
+      else{
+        dash_button.style.backgroundColor = "gray";
+        on_dash_button = false;
+      }
 });
   
 
