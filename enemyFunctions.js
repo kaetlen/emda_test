@@ -115,6 +115,7 @@ async function enemyTurn() {
     if (allUnitsOutOfRange && enemy.actions > 0) {
       enemy.movement *= 2;
       enemy.actions -= 1;
+      console.log("dashing");
     }
 
     await enemyAction(enemy, target);
