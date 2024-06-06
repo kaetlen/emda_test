@@ -170,21 +170,34 @@ if (selected) {
   stage.addChild(line);
 }
 }
+function drawStatButtons(){
+  con_button.style.display = 'block';
+  let con_button_text = document.createElement('div');
+  con_button_text.innerText = "Con\n"+selected.constitution;
+  con_button.innerHTML = '';
+  con_button.appendChild(con_button_text);
 
+  dex_button.style.display = 'block';
+  let dex_button_text = document.createElement('div');
+  dex_button_text.innerText = "Dex\n"+selected.dextarity;
+  dex_button.innerHTML = '';
+  dex_button.appendChild(dex_button_text);
+
+  str_button.style.display = 'block';
+  let str_button_text = document.createElement('div');
+  str_button_text.innerText = "Str\n"+selected.strength;
+  str_button.innerHTML = '';
+  str_button.appendChild(str_button_text);
+
+  int_button.style.display = 'block';
+  let int_button_text = document.createElement('div');
+  int_button_text.innerText = "Int\n"+selected.inteligence;
+  int_button.innerHTML = '';
+  int_button.appendChild(int_button_text);
+}
 function show_stats(){
   if(selected){
-    con_button.style.display = 'block';
-    let con_button_text = document.createElement('div');
-    con_button_text.innerText = "Con\n"+selected.constitution;
-    dex_button.style.display = 'block';
-    let dex_button_text = document.createElement('div');
-    dex_button_text.innerText = "Dex\n"+selected.dextarity;
-    str_button.style.display = 'block';
-    let str_button_text = document.createElement('div');
-    str_button_text.innerText = "Str\n"+selected.strength;
-    int_button.style.display = 'block';
-    let int_button_text = document.createElement('div');
-    int_button_text.innerText = "Int\n"+selected.inteligence;
+    drawStatButtons();
 
     selected_stat_block.style.display= 'block';
   let text1 = document.createElement('div');
@@ -202,6 +215,10 @@ function show_stats(){
   }
   else{ selected_stat_block.style.display= 'none';
  selected_stat_block.innerHTML = '';
+ con_button.style.display = 'none';
+  dex_button.style.display = 'none';
+  str_button.style.display = 'none';
+  int_button.style.display = 'none';
 }
   
   if(target){
@@ -222,6 +239,7 @@ function show_stats(){
 else{
   target_stat_block.style.display= 'none';
  target_stat_block.innerHTML = '';
+ 
 }
 }
 

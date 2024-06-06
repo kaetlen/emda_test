@@ -73,21 +73,22 @@ function init() {
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
     if (currentLine>=diolog.length-1 && text_box.style.display === 'flex'){
-     
       currentLine=0
     text_box.style.display = 'none';}
     else if(text_box.style.display === 'flex'){
-      
       currentLine++
       text_box.innerHTML = diolog[currentLine];
     }
-  
+
      const rect = canvas.getBoundingClientRect();
      const mouseX = event.clientX - rect.left;
      const mouseY = event.clientY - rect.top;
      const gridPosition = getGridPosition(mouseX, mouseY);
      var distance = 0
      
+     if(selected != undefined && mouseX < GRID_SIZE*GRID_WIDTH && mouseY < GRID_SIZE*GRID_HEIGHT && mouseX > 0 && mouseY > 0){
+      con_button.style.backgroundColor = "red";
+     }
   
      console.log(`Grid position: ${gridPosition} ${gridArray[gridPosition[1]][gridPosition[0]]}`);
   
@@ -95,11 +96,7 @@ function init() {
        moveToPoint(mouseX, mouseY, selected);
        
      }
-  //selected=null
-     
-     
-     
-  
+ 
      const units = turn === 'friendly' ? friendlyUnits : enemyUnits;
      const targets = turn === 'friendly' ? enemyUnits : friendlyUnits;
   if(turn === 'friendly'){
@@ -142,14 +139,13 @@ function init() {
       selected=null
       target=null
     }
-      
   
      checkDeath();
   
      if (enemyUnits.length === 0) {
-  
        newLevel();
      }
+
      if(friendlyUnits.length === friendlyDeadUnits.length){
       levelSong.pause();
       game_over_sound.play();
@@ -158,19 +154,15 @@ function init() {
 
      }
      // Clear the stage and redraw the grid to show updated starting positions
-   
-     
-    
-     
-   
   
-    
      
      draw();
    
    });
   }
   
+
+
    if(!firstClick){
     const titleScreen = new createjs.Bitmap('images/title.png');
 

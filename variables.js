@@ -163,6 +163,7 @@ const GRID_HEIGHT = 25
       this.maxBonusActions = maxBonusActions;
       this.bonusActions = this.maxBonusActions;
       this.frame=0
+      this.xp_points = 0;
     }
   }
 
