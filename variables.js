@@ -122,6 +122,8 @@ var on_dex_button = false;
 var on_str_button = false;
 var on_int_button = false;
 
+var dash_button = document.getElementById('dash_square');
+
 var loopedAudio;
 
 let firstClick = false;

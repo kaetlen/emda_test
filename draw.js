@@ -194,6 +194,12 @@ function drawStatButtons(){
   int_button_text.innerText = "Int\n"+selected.inteligence;
   int_button.innerHTML = '';
   int_button.appendChild(int_button_text);
+
+  dash_button.style.display = 'block';
+  let dash_button_text = document.createElement('div');
+  dash_button_text.innerText = "Dash";
+  dash_button.innerHTML = '';
+  dash_button.appendChild(dash_button_text);
 }
 function show_stats(){
   if(selected){
@@ -219,6 +225,7 @@ function show_stats(){
   dex_button.style.display = 'none';
   str_button.style.display = 'none';
   int_button.style.display = 'none';
+  dash_button.style.display = 'none';
 }
   
   if(target){
