@@ -161,7 +161,7 @@ function findPath(startCol, startRow, endCol, endRow, maxDistance, minDistance=0
   return null;
 }
 
-function findPathMaxDistance(startX, startY, endX, endY, maxDistance) {
+function findPathMaxDistance(startX, startY, endX, endY, maxDistance, minDistance=0) {
   // Initialize the queue with the start position and distance 0
   let queue = [{x: startX, y: startY, dist: 0}];
 
@@ -175,8 +175,8 @@ function findPathMaxDistance(startX, startY, endX, endY, maxDistance) {
   while (queue.length > 0) {
     let current = queue.shift();
 
-    // If we've reached the end position, return the distance
-    if (current.x === endX && current.y === endY) {
+    // If we've reached the end position and the distance is within the min and max bounds, return the distance
+    if (current.x === endX && current.y === endY && current.dist >= minDistance && current.dist <= maxDistance) {
       return current.dist;
     }
 

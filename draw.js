@@ -60,7 +60,7 @@ square.alpha = .4;
       selectSquare.alpha = 1;
       ;
     }
-       else if (isValidAttack) {
+       else if (isValidAttack){
       selectSquare.graphics.beginFill("red").drawRect(0, 0, GRID_SIZE, GRID_SIZE)
       selectSquare.x = xSelect;
       selectSquare.y = ySelect;
