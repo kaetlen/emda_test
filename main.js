@@ -73,8 +73,10 @@ function init() {
    // Add click event listener to the canvas
    document.addEventListener("mouseup", () => {
     if(on_con_button){
+      if(selected.constitution<20){
       selected.constitution+=1;
 selected.maxHealth= 10+Math.ceil((selected.constitution-10)/2);
+      }
     }
     else{
     if (currentLine>=diolog.length-1 && text_box.style.display === 'flex'){
