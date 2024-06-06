@@ -103,6 +103,13 @@ selected.xp_points-=1;
       selected.xp_points-=1;
       }
     }
+    else if(on_dash_button ){
+      if (selected.actions>=1){
+      selected.movement += selected.maxMovement;
+      selected.actions -= 1;
+      console.log("dashing");
+      }
+    }
     else{
 
     if (currentLine>=diolog.length-1 && text_box.style.display === 'flex'){
@@ -119,9 +126,7 @@ selected.xp_points-=1;
      const gridPosition = getGridPosition(mouseX, mouseY);
      var distance = 0
      
-     if(selected != undefined && mouseX < GRID_SIZE*GRID_WIDTH && mouseY < GRID_SIZE*GRID_HEIGHT && mouseX > 0 && mouseY > 0){
-      con_button.style.backgroundColor = "red";
-     }
+     
   
      console.log(`Grid position: ${gridPosition} ${gridArray[gridPosition[1]][gridPosition[0]]}`);
   
@@ -226,6 +231,13 @@ selected.xp_points-=1;
       else{
         int_button.style.backgroundColor = "gray";
         on_int_button = false;
+      }
+
+      if(selected != undefined && mouseX<250 && mouseY<865 && mouseX>=200 && mouseY>813  ){
+        if (selected.actions>=1){
+        dash_button.style.backgroundColor = "red";
+        }
+        on_dash_button = true;
       }
 });
   
